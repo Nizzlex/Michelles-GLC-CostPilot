@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Michelle's GLC CostPilot</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header><p>GLC 300e · X253</p><h1>Michelle's GLC CostPilot</h1></header>
+<main>
+<form id="calc-form">
+<section class="panel">
+<h2>Preise und Verbräuche</h2>
+<div class="grid">
+<label>Strompreis<input id="ep" value="0,41"><small>€/kWh</small></label>
+<label>Benzinpreis<input id="bp" value="1,90"><small>€/l</small></label>
+<label>Elektroverbrauch<input id="ec" value="23,0"><small>kWh/100 km</small></label>
+<label>Benzinverbrauch<input id="fc" value="8,7"><small>l/100 km</small></label>
+<label>Kombiniert Strom<input id="hc" value="11,5"><small>kWh/100 km</small></label>
+<label>Kombiniert Benzin<input id="hf" value="3,8"><small>l/100 km</small></label>
+<label>Ladeverluste<input id="loss" value="10"><small>%</small></label>
+<label>Jahresfahrleistung<input id="annual" value="15000"><small>km</small></label>
+</div>
+<p id="error" hidden></p>
+<button type="submit">Preise berechnen</button>
+</section>
+</form>
+
+<section id="results" hidden>
+<section class="panel recommendation">
+<p>Empfehlung</p><h2 id="recommendation"></h2><div id="recommendation-detail"></div>
+</section>
+
+<div class="cards">
+<article><span>Rein elektrisch</span><strong id="electric"></strong><small id="electric-year"></small></article>
+<article><span>Kombiniert</span><strong id="hybrid"></strong><small id="hybrid-year"></small></article>
+<article><span>Rein Benzin</span><strong id="fuel"></strong><small id="fuel-year"></small></article>
+</div>
+
+<section class="panel">
+<h2>Preisübersicht</h2>
+<div class="table-wrap">
+<table><thead><tr><th>Strecke</th><th>Elektrisch</th><th>Kombiniert</th><th>Benzin</th></tr></thead>
+<tbody id="distance-table"></tbody></table>
+</div>
+</section>
+
+<div class="two">
+<section class="panel"><p>Break-even-Strompreis</p><h2 id="break-even"></h2></section>
+<section class="panel"><p>Jährliche Ersparnis</p><h2 id="saving"></h2><div id="saving-text"></div></section>
+</div>
+</section>
+</main>
+<footer>Alle Eingaben bleiben lokal in deinem Browser.</footer>
+<script src="app.js"></script>
+</body>
+</html>
