@@ -11,6 +11,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="v3-additions.css">
 </head>
 <body>
 <header class="hero" id="dashboard">
@@ -30,6 +31,7 @@
 <nav class="drawer" id="drawer">
  <button id="closeMenu">×</button>
  <a href="#dashboard">Dashboard</a>
+ <a href="#mobility">Unterwegs</a>
  <a href="#calculator">Kostenrechner</a>
  <a href="#comparison">Preisübersicht</a>
  <a href="#family">Unsere Familie</a>
@@ -43,6 +45,49 @@
  <article><span>Erstzulassung</span><strong>02/2022</strong><p>19″ AMG-Felgen</p><small>Plug-in-Hybrid</small></article>
  <article><span>Akkuzustand</span><strong id="batteryDisplay">97 %</strong><p>Sehr guter Zustand</p><div class="bar"><i id="batteryBar"></i></div></article>
  <article><span>Kilometerstand</span><strong id="mileageDisplay">45.680 km</strong><p>Manuell anpassbar</p><button id="editMileage">Ändern</button></article>
+</section>
+
+
+<section class="panel mobility-panel" id="mobility">
+ <div class="section-head">
+  <div>
+   <span>Version 3.0 · Schnellzugriff</span>
+   <h2>Unterwegs</h2>
+  </div>
+  <b>● Direkt öffnen</b>
+ </div>
+ <p class="mobility-intro">
+  Route planen oder passende Ladesäulen mit den bereits installierten Apps suchen.
+ </p>
+ <div class="mobility-actions">
+  <a class="mobility-button maps-button"
+     href="https://www.google.com/maps/dir/?api=1"
+     target="_blank"
+     rel="noopener noreferrer">
+   <span class="mobility-icon" aria-hidden="true">➤</span>
+   <span class="mobility-copy">
+    <strong>Route in Google Maps öffnen</strong>
+    <small>Start, Ziel und Zwischenstopps direkt eingeben</small>
+   </span>
+   <span class="mobility-arrow" aria-hidden="true">›</span>
+  </a>
+
+  <a class="mobility-button enbw-button"
+     id="openEnbwButton"
+     href="https://www.enbw.com/elektromobilitaet/produkte/mobilityplus-app"
+     target="_blank"
+     rel="noopener noreferrer">
+   <span class="mobility-icon" aria-hidden="true">⚡</span>
+   <span class="mobility-copy">
+    <strong>Ladesäulen in EnBW mobility+ suchen</strong>
+    <small>Öffnet je nach Gerät App Store, Play Store oder EnBW</small>
+   </span>
+   <span class="mobility-arrow" aria-hidden="true">›</span>
+  </a>
+ </div>
+ <p class="mobility-note">
+  Hinweis: Eine direkte Übergabe von Suchfiltern an mobility+ ist ohne öffentlich dokumentierten Deep-Link nicht zuverlässig möglich.
+ </p>
 </section>
 
 <section class="panel" id="calculator">
@@ -118,5 +163,6 @@
 </dialog>
 
 <script src="app.js" defer></script>
+<script src="v3-links.js" defer></script>
 </body>
 </html>

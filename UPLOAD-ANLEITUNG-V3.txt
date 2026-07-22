@@ -1,0 +1,36 @@
+MICHIE’S GLC ORGANIZER – VERSION 3.0 SCHNELLZUGRIFFE
+
+Dieses Paket aktualisiert ausschließlich die bestehende GitHub-Pages-App:
+https://nizzlex.github.io/Michelles-GLC-CostPilot/
+
+Enthaltene Änderungen:
+- Neuer Bereich „Unterwegs“
+- Button „Route in Google Maps öffnen“
+- Button „Ladesäulen in EnBW mobility+ suchen“
+- Automatische Weiterleitung zur passenden EnBW-Seite:
+  - iPhone/iPad: Apple App Store
+  - Android: Google Play
+  - Desktop: offizielle EnBW-mobility+-Seite
+- Neuer Service-Worker-Cache „glc-organizer-v30-links“
+- Bestehender Rechner, Fahrzeugdaten, Bilder und Rechenlogik bleiben unverändert
+
+IN GITHUB ERSETZEN / HOCHLADEN:
+1. index.html ersetzen
+2. service-worker.js ersetzen
+3. v3-additions.css neu hochladen
+4. v3-links.js neu hochladen
+
+Empfohlener Commit:
+Version 3.0: Google Maps und EnBW Schnellzugriffe
+
+WICHTIG AUF DEM IPHONE:
+Nach dem GitHub-Pages-Update die PWA vollständig schließen und neu öffnen.
+Falls der neue Bereich nicht erscheint:
+- Safari-Seite neu laden
+- PWA erneut schließen und öffnen
+- notfalls die Home-Screen-Verknüpfung löschen und erneut hinzufügen
+
+TECHNISCHER HINWEIS:
+Für EnBW mobility+ ist kein verlässlich öffentlich dokumentierter Deep-Link bekannt,
+der direkt die interne Ladesäulensuche öffnet. Deshalb nutzt diese erste Version
+offizielle Store- bzw. EnBW-Links und erfindet kein möglicherweise instabiles URL-Schema.
