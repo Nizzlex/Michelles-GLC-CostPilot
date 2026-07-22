@@ -1,32 +1,22 @@
-# Michelle's GLC CostPilot v2.0
+# Michelle's GLC CostPilot v2.1 – iPhone Edition
 
-Persönliches Dashboard und Kostenrechner für den Mercedes GLC 300e (X253).
+## Neu
+- Alle Bilder liegen direkt im Hauptverzeichnis
+- Keine `assets`-Ordnerstruktur mehr nötig
+- Für iPhone optimierter Startbereich
+- Hamburger-Menü oben rechts
+- Feste Navigation am unteren Bildschirmrand
+- Familienfotos als horizontaler Wisch-Slider
+- Größere Eingabefelder und Touch-Flächen
+- Verbesserter Offline-Cache
+- Vollbild-PWA für den Home-Bildschirm
 
-## Neu in Version 2.0
+## Update
+Alle Dateien aus dem ZIP direkt in das Stammverzeichnis des Repositorys hochladen und vorhandene Dateien ersetzen.
 
-- Persönliches Mercedes-inspiriertes Dashboard
-- Mercedes-Logo, GLC-Titelbild und drei Familienfotos
-- Fahrzeugkarte mit FIN, EZ, AMG-Line, Akkuzustand und Kilometerstand
-- Live-Kostenrechner für Elektro, kombiniert und Benzin
-- Empfehlung und Rangliste der Fahrmodi
-- Monats-, Jahres- und Streckenkosten
-- Break-even-Strompreis
-- Kilometerstand lokal editierbar
-- Lokale Speicherung aller Werte
-- Installierbare PWA mit Offline-Unterstützung
-- Responsive Darstellung für iPhone, Tablet und Desktop
+Wichtig: Auch `service-worker.js` muss hochgeladen werden.
 
-## GitHub-Update
+Commit:
+`Update auf Version 2.1 iPhone Edition`
 
-Alle Dateien und den Ordner `assets` in das Stammverzeichnis des Repositorys hochladen und bestehende Dateien ersetzen.
-
-Commit-Nachricht:
-`Update auf Version 2.0`
-
-## Datenschutz
-
-Das Repository und GitHub Pages sind öffentlich. Daher sind auch die eingebundenen Familienfotos öffentlich abrufbar. Eingabewerte und Kilometerstand werden nur lokal im jeweiligen Browser gespeichert.
-
-## Markenhinweis
-
-Mercedes-Benz und das Sternlogo sind Marken der Mercedes-Benz Group AG. Dieses private, nicht offizielle Projekt steht in keiner Verbindung zu Mercedes-Benz.
+Da das Repository öffentlich ist, sind die Familienbilder öffentlich sichtbar.
