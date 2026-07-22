@@ -2,251 +2,251 @@
 <html lang="de">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#07101b">
-  <meta name="description" content="Kostenrechner für Michelle's Mercedes GLC 300e (X253)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="GLC CostPilot">
+  <meta name="description" content="Michelle's persönlicher GLC 300e Kostenrechner und Familiendashboard">
   <title>Michelle's GLC CostPilot</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-inner">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <img src="assets/mercedes-logo.jpg" alt="Mercedes-Stern">
       <div>
-        <p class="eyebrow">Mercedes GLC 300e · X253</p>
-        <h1>Michelle's GLC CostPilot</h1>
-        <p class="subtitle">Live-Kostenvergleich für Elektro, kombiniert und Benzin</p>
-      </div>
-
-      <div class="vehicle-badge" aria-label="Fahrzeugstatus">
-        <span class="vehicle-badge-label">Batteriezustand</span>
-        <strong id="battery-badge">97 %</strong>
+        <strong>Michelle's</strong>
+        <span>GLC CostPilot</span>
       </div>
     </div>
-  </header>
 
-  <main class="container">
-    <section class="dashboard-grid" aria-label="Übersicht">
-      <article class="status-card battery-card">
-        <span class="status-icon">🔋</span>
-        <div>
-          <p>Akkuzustand</p>
-          <strong id="battery-tile">97 %</strong>
-          <small>State of Health</small>
-        </div>
-      </article>
+    <nav>
+      <a href="#dashboard" class="active">⌂ <span>Dashboard</span></a>
+      <a href="#calculator">▦ <span>Kostenrechner</span></a>
+      <a href="#comparison">◇ <span>Preisübersicht</span></a>
+      <a href="#family">♡ <span>Unsere Familie</span></a>
+      <a href="#vehicle">▣ <span>Fahrzeug</span></a>
+    </nav>
 
-      <article class="status-card recommendation-card">
-        <span class="status-icon">🏆</span>
-        <div>
-          <p>Heute lohnt sich</p>
-          <strong id="quick-recommendation">–</strong>
-          <small id="quick-saving">Werte eingeben</small>
-        </div>
-      </article>
+    <div class="sidebar-family">
+      <img src="assets/family-provence.jpg" alt="Familienfoto">
+      <p>„Die schönsten Reisen beginnen gemeinsam.“</p>
+    </div>
+  </aside>
 
-      <article class="status-card price-card">
-        <span class="status-icon">⚡</span>
-        <div>
-          <p>Break-even Strom</p>
-          <strong id="quick-break-even">–</strong>
-          <small>Elektro = Benzin</small>
-        </div>
-      </article>
+  <button class="menu-button" id="menu-button" aria-label="Menü öffnen">☰</button>
+
+  <main>
+    <section class="hero" id="dashboard">
+      <img class="hero-image" src="assets/glc.jpg" alt="Schwarzer Mercedes GLC">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <p class="eyebrow">Mercedes GLC 300e · X253</p>
+        <h1>Michelle's<br>GLC CostPilot</h1>
+        <p class="hero-subtitle">Für unsere Familie ♡</p>
+      </div>
+      <div class="hero-family-pill">
+        <img src="assets/family-ghent.jpg" alt="">
+        <span>Familie Sigloch</span>
+      </div>
     </section>
 
-    <form id="calculator-form" class="panel" novalidate>
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Kostenrechner</p>
-          <h2>Preise und Verbräuche</h2>
-          <p class="section-note">Die Ergebnisse aktualisieren sich automatisch bei jeder Eingabe.</p>
-        </div>
-        <button type="button" id="reset-button" class="button button-secondary">Zurücksetzen</button>
-      </div>
+    <div class="content">
+      <section class="vehicle-grid" id="vehicle">
+        <article class="info-card">
+          <span class="card-label">Fahrzeug</span>
+          <strong>Mercedes GLC 300e</strong>
+          <p>4MATIC · X253 · AMG-Line</p>
+          <small>W1N2539531G038655</small>
+        </article>
 
-      <div class="form-grid">
-        <label>
-          <span>Strompreis</span>
-          <div class="input-unit">
-            <input id="electricity-price" inputmode="decimal" value="0,41" aria-label="Strompreis">
-            <span>€/kWh</span>
-          </div>
-        </label>
+        <article class="info-card">
+          <span class="card-label">Erstzulassung</span>
+          <strong>02/2022</strong>
+          <p>Plug-in-Hybrid</p>
+          <small>19″ AMG-Felgen</small>
+        </article>
 
-        <label>
-          <span>Benzinpreis</span>
-          <div class="input-unit">
-            <input id="fuel-price" inputmode="decimal" value="1,90" aria-label="Benzinpreis">
-            <span>€/l</span>
-          </div>
-        </label>
+        <article class="info-card battery-card">
+          <span class="card-label">Akkuzustand</span>
+          <strong id="battery-display">97 %</strong>
+          <p>Sehr guter Zustand</p>
+          <div class="battery-bar"><i id="battery-bar"></i></div>
+        </article>
 
-        <label>
-          <span>Rein elektrisch</span>
-          <div class="input-unit">
-            <input id="electric-consumption" inputmode="decimal" value="23,0" aria-label="Elektrischer Verbrauch">
-            <span>kWh/100 km</span>
-          </div>
-        </label>
-
-        <label>
-          <span>Rein Benzin</span>
-          <div class="input-unit">
-            <input id="fuel-consumption" inputmode="decimal" value="8,7" aria-label="Benzinverbrauch">
-            <span>l/100 km</span>
-          </div>
-        </label>
-
-        <label>
-          <span>Kombiniert: Strom</span>
-          <div class="input-unit">
-            <input id="hybrid-electric-consumption" inputmode="decimal" value="11,5" aria-label="Kombinierter Stromverbrauch">
-            <span>kWh/100 km</span>
-          </div>
-        </label>
-
-        <label>
-          <span>Kombiniert: Benzin</span>
-          <div class="input-unit">
-            <input id="hybrid-fuel-consumption" inputmode="decimal" value="3,8" aria-label="Kombinierter Benzinverbrauch">
-            <span>l/100 km</span>
-          </div>
-        </label>
-
-        <label>
-          <span>Ladeverluste</span>
-          <div class="input-unit">
-            <input id="charging-loss" inputmode="decimal" value="10" aria-label="Ladeverluste">
-            <span>%</span>
-          </div>
-        </label>
-
-        <label>
-          <span>Jahresfahrleistung</span>
-          <div class="input-unit">
-            <input id="annual-distance" inputmode="numeric" value="15000" aria-label="Jahresfahrleistung">
-            <span>km</span>
-          </div>
-        </label>
-
-        <label>
-          <span>Akkuzustand</span>
-          <div class="input-unit">
-            <input id="battery-health" inputmode="decimal" value="97" aria-label="Akkuzustand">
-            <span>%</span>
-          </div>
-        </label>
-      </div>
-
-      <p id="error-message" class="error-message" role="alert" hidden></p>
-
-      <button type="submit" class="button button-primary button-calculate">
-        Preise jetzt berechnen
-      </button>
-    </form>
-
-    <section id="results" aria-live="polite">
-      <section class="panel recommendation-panel">
-        <div class="recommendation-copy">
-          <p class="eyebrow">Empfehlung</p>
-          <h2 id="recommendation-title">–</h2>
-          <p id="recommendation-text">Bitte gültige Werte eingeben.</p>
-        </div>
-        <div class="recommendation-saving">
-          <span>Vorteil pro Jahr</span>
-          <strong id="recommendation-annual-saving">–</strong>
-        </div>
+        <article class="info-card">
+          <span class="card-label">Kilometerstand</span>
+          <strong id="mileage-display">45.680 km</strong>
+          <p>Manuell anpassbar</p>
+          <button class="text-button" id="edit-mileage">Ändern</button>
+        </article>
       </section>
 
-      <div class="result-grid">
-        <article class="result-card" data-mode="electric">
-          <div class="result-topline">
-            <span class="mode-icon">🔋</span>
-            <span id="electric-rank" class="rank-badge">–</span>
+      <section class="main-grid">
+        <form class="panel calculator" id="calculator">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Aktuelle Preise</p>
+              <h2>Kostenrechner</h2>
+            </div>
+            <span class="live-indicator">● Live</span>
           </div>
-          <p class="mode">Rein elektrisch</p>
-          <p id="electric-cost" class="price">–</p>
-          <p id="electric-km" class="per-km">–</p>
-          <p id="electric-year" class="secondary-value">–</p>
-        </article>
 
-        <article class="result-card" data-mode="hybrid">
-          <div class="result-topline">
-            <span class="mode-icon">🔄</span>
-            <span id="hybrid-rank" class="rank-badge">–</span>
+          <div class="input-grid">
+            <label>Strompreis
+              <div class="input-unit"><input id="electricity-price" value="0,41" inputmode="decimal"><span>€/kWh</span></div>
+            </label>
+            <label>Benzinpreis
+              <div class="input-unit"><input id="fuel-price" value="1,90" inputmode="decimal"><span>€/l</span></div>
+            </label>
+            <label>Elektrisch
+              <div class="input-unit"><input id="electric-consumption" value="23,0" inputmode="decimal"><span>kWh/100 km</span></div>
+            </label>
+            <label>Benzin
+              <div class="input-unit"><input id="fuel-consumption" value="8,7" inputmode="decimal"><span>l/100 km</span></div>
+            </label>
+            <label>Kombiniert Strom
+              <div class="input-unit"><input id="hybrid-electric" value="11,5" inputmode="decimal"><span>kWh/100 km</span></div>
+            </label>
+            <label>Kombiniert Benzin
+              <div class="input-unit"><input id="hybrid-fuel" value="3,8" inputmode="decimal"><span>l/100 km</span></div>
+            </label>
+            <label>Ladeverluste
+              <div class="input-unit"><input id="charging-loss" value="10" inputmode="decimal"><span>%</span></div>
+            </label>
+            <label>Jahresfahrleistung
+              <div class="input-unit"><input id="annual-distance" value="15000" inputmode="numeric"><span>km</span></div>
+            </label>
+            <label>Akkuzustand
+              <div class="input-unit"><input id="battery-health" value="97" inputmode="decimal"><span>%</span></div>
+            </label>
           </div>
-          <p class="mode">Kombiniert</p>
-          <p id="hybrid-cost" class="price">–</p>
-          <p id="hybrid-km" class="per-km">–</p>
-          <p id="hybrid-year" class="secondary-value">–</p>
-        </article>
 
-        <article class="result-card" data-mode="fuel">
-          <div class="result-topline">
-            <span class="mode-icon">⛽</span>
-            <span id="fuel-rank" class="rank-badge">–</span>
+          <p id="error" class="error" hidden></p>
+          <div class="button-row">
+            <button type="submit" class="primary-button">Preise berechnen</button>
+            <button type="button" class="secondary-button" id="reset">Standardwerte</button>
           </div>
-          <p class="mode">Rein Benzin</p>
-          <p id="fuel-cost" class="price">–</p>
-          <p id="fuel-km" class="per-km">–</p>
-          <p id="fuel-year" class="secondary-value">–</p>
-        </article>
-      </div>
+        </form>
 
-      <section class="comparison-panel panel">
-        <div class="section-heading compact">
+        <section class="panel recommendation">
+          <p class="eyebrow">Heute lohnt sich</p>
+          <div class="recommendation-icon">⚡</div>
+          <h2 id="best-mode">–</h2>
+          <p id="best-description">Bitte Werte eingeben.</p>
+          <ol id="ranking"></ol>
+          <div class="saving-box">
+            <span>Ersparnis gegenüber Platz 2</span>
+            <strong id="saving-100">–</strong>
+            <small id="saving-year">–</small>
+          </div>
+        </section>
+      </section>
+
+      <section id="comparison">
+        <div class="section-title">
           <div>
-            <p class="eyebrow">Preisübersicht</p>
-            <h2>Streckenkosten</h2>
+            <p class="eyebrow">Kostenübersicht</p>
+            <h2>Kosten pro Fahrmodus</h2>
           </div>
         </div>
-        <div class="table-scroll">
-          <table>
-            <thead>
-              <tr>
-                <th>Strecke</th>
-                <th>Elektrisch</th>
-                <th>Kombiniert</th>
-                <th>Benzin</th>
-              </tr>
-            </thead>
-            <tbody id="distance-table"></tbody>
-          </table>
+
+        <div class="cost-cards">
+          <article class="cost-card electric" data-mode="electric">
+            <span>⚡ Elektrisch</span>
+            <strong id="electric-cost">–</strong>
+            <p id="electric-detail">–</p>
+            <div><small>Pro Monat</small><b id="electric-month">–</b></div>
+            <div><small>Pro Jahr</small><b id="electric-year">–</b></div>
+          </article>
+
+          <article class="cost-card hybrid" data-mode="hybrid">
+            <span>⛽⚡ Kombiniert</span>
+            <strong id="hybrid-cost">–</strong>
+            <p id="hybrid-detail">–</p>
+            <div><small>Pro Monat</small><b id="hybrid-month">–</b></div>
+            <div><small>Pro Jahr</small><b id="hybrid-year">–</b></div>
+          </article>
+
+          <article class="cost-card fuel" data-mode="fuel">
+            <span>⛽ Benzin</span>
+            <strong id="fuel-cost">–</strong>
+            <p id="fuel-detail">–</p>
+            <div><small>Pro Monat</small><b id="fuel-month">–</b></div>
+            <div><small>Pro Jahr</small><b id="fuel-year">–</b></div>
+          </article>
         </div>
+
+        <div class="insight-grid">
+          <article class="panel compact-panel">
+            <span>Break-even Strompreis</span>
+            <strong id="break-even">–</strong>
+            <p>Ab diesem Strompreis sind Elektro und Benzin gleich teuer.</p>
+          </article>
+          <article class="panel compact-panel">
+            <span>Günstigster Monatswert</span>
+            <strong id="best-monthly">–</strong>
+            <p id="best-monthly-text">–</p>
+          </article>
+          <article class="panel compact-panel">
+            <span>Gesamtersparnis</span>
+            <strong id="total-saving">–</strong>
+            <p id="total-saving-text">–</p>
+          </article>
+        </div>
+
+        <section class="panel distance-panel">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Preisübersicht</p>
+              <h2>Streckenkosten</h2>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Strecke</th><th>Elektrisch</th><th>Kombiniert</th><th>Benzin</th></tr></thead>
+              <tbody id="distance-table"></tbody>
+            </table>
+          </div>
+        </section>
       </section>
 
-      <div class="insights-grid">
-        <article class="panel insight-card">
-          <p class="eyebrow">Break-even</p>
-          <h3 id="break-even-price">–</h3>
-          <p>Bei diesem Strompreis sind rein elektrischer und reiner Benzinbetrieb gleich teuer.</p>
-        </article>
+      <section class="family-section" id="family">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">Unsere Familie</p>
+            <h2>Gemeinsam unterwegs</h2>
+          </div>
+        </div>
+        <div class="family-gallery">
+          <figure><img src="assets/family-ghent.jpg" alt="Familie bei Nacht in Gent"><figcaption>Städtetrip</figcaption></figure>
+          <figure><img src="assets/family-provence.jpg" alt="Familien-Selfie in der Provence"><figcaption>Sommerreise</figcaption></figure>
+          <figure><img src="assets/family-winter.jpg" alt="Familien-Selfie im Winter"><figcaption>Winterurlaub</figcaption></figure>
+        </div>
+      </section>
+    </div>
 
-        <article class="panel insight-card">
-          <p class="eyebrow">Monatskosten</p>
-          <h3 id="monthly-best-cost">–</h3>
-          <p id="monthly-best-description">–</p>
-        </article>
-
-        <article class="panel insight-card">
-          <p class="eyebrow">Ersparnis</p>
-          <h3 id="annual-saving">–</h3>
-          <p id="saving-description">–</p>
-        </article>
-
-        <article class="panel insight-card">
-          <p class="eyebrow">Akkuzustand</p>
-          <h3 id="battery-health-result">–</h3>
-          <p id="battery-health-description">Der Akkuzustand beeinflusst vor allem die elektrische Reichweite.</p>
-        </article>
-      </div>
-    </section>
+    <footer>
+      <img src="assets/mercedes-logo.jpg" alt="">
+      <div><strong>Michelle's GLC CostPilot v2.0</strong><span>Die schönsten Reisen beginnen gemeinsam.</span></div>
+    </footer>
   </main>
 
-  <footer>
-    <p>Michelle's GLC CostPilot v1.1</p>
-    <small>Alle Eingaben werden ausschließlich lokal in diesem Browser gespeichert.</small>
-  </footer>
+  <dialog id="mileage-dialog">
+    <form method="dialog">
+      <h2>Kilometerstand</h2>
+      <label>Aktueller Kilometerstand
+        <div class="input-unit"><input id="mileage-input" inputmode="numeric" value="45680"><span>km</span></div>
+      </label>
+      <div class="button-row">
+        <button value="cancel" class="secondary-button">Abbrechen</button>
+        <button value="save" class="primary-button" id="save-mileage">Speichern</button>
+      </div>
+    </form>
+  </dialog>
 
   <script src="app.js" defer></script>
 </body>
