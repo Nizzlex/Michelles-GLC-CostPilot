@@ -1,0 +1,27 @@
+MICHIE’S GLC ORGANIZER – UPDATE FÜR DIE BESTEHENDE APP
+
+Nur diese fünf Dateien im Stammverzeichnis des bestehenden GitHub-Repositories
+Michelles-GLC-CostPilot hochladen und die vorhandenen Dateien ersetzen:
+
+- index.html
+- manifest.webmanifest
+- service-worker.js
+- icon-192.png
+- icon-512.png
+
+Unverändert bleiben insbesondere:
+- app.js
+- styles.css
+- glc.jpg
+- mercedes-logo.jpg
+- alle Familienbilder
+- die vorhandene Rechenlogik und das Design
+
+Empfohlener Commit:
+Umbenennung in Michie's GLC Organizer und neues App-Icon
+
+Hinweis für iPhone:
+Nach dem GitHub-Pages-Update die App einmal vollständig schließen und neu öffnen.
+Falls das alte Home-Screen-Icon weiterhin angezeigt wird, die bisherige Verknüpfung
+vom Home-Bildschirm entfernen und die Webseite erneut über „Zum Home-Bildschirm“
+hinzufügen. iOS speichert App-Icons teilweise unabhängig vom Service-Worker-Cache.
