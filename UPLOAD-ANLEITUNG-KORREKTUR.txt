@@ -1,0 +1,47 @@
+MICHIE'S GLC ORGANIZER – KORREKTURVERSION 4.1
+
+WICHTIG: Diese Version verwendet KEINE Unterordner.
+Alle Dateien müssen direkt im Hauptverzeichnis des GitHub-Repositories liegen.
+
+VOR DEM UPLOAD LÖSCHEN:
+1. Ordner: assets
+2. Datei/Ordner: assetsicons
+3. Datei/Ordner: photos
+4. Alte doppelte Bilddateien und alte App-Dateien werden anschließend durch diese Version ersetzt.
+5. Optional alte Zusatzdateien löschen: v3-additions.css, v3-links.js
+
+IM HAUPTVERZEICHNIS SOLLEN DANACH NUR DIESE APP-DATEIEN LIEGEN:
+index.html
+styles.css
+app.js
+manifest.webmanifest
+service-worker.js
+README.md
+UPLOAD-ANLEITUNG-KORREKTUR.txt
+favicon.png
+icon-192.png
+icon-512.png
+glc.jpg
+michie-hero.jpg
+family-city.jpg
+family-summer.jpg
+family-winter.jpg
+
+UPLOAD:
+1. ZIP auf dem iPhone in der Dateien-App entpacken.
+2. GitHub-Repository öffnen.
+3. Add file > Upload files.
+4. ALLE DATEIEN AUS DEM ENTPACKTEN ORDNER markieren.
+5. Nicht den Ordner selbst hochladen, sondern seinen gesamten Inhalt.
+6. Commit message: Korrektur v4.1 – Bilder und iPhone-Pfade
+7. Commit changes.
+
+NACH DEM UPLOAD:
+Öffne:
+https://nizzlex.github.io/Michelles-GLC-CostPilot/?v=41
+
+Falls noch die alte Version erscheint:
+- Safari-Tab schließen
+- Einstellungen > Safari > Erweitert > Websitedaten
+- nach nizzlex.github.io suchen und löschen
+- Seite erneut mit ?v=41 öffnen
