@@ -1,16 +1,11 @@
-# Michie's GLC Organizer v3.0
+# Michie’s GLC Organizer v4 – iPhone Edition
 
-## Installation auf GitHub Pages
-1. Alle Dateien dieses Ordners in das Repository `Nizzlex/Michelles-GLC-CostPilot` hochladen und bestehende Dateien ersetzen.
-2. GitHub Pages verwendet weiterhin den Branch `main` und den Ordner `/ (root)`.
-3. App öffnen, den Tankerkönig-API-Key einmalig im Feld **Tankerkönig API-Key** eintragen und **Standort & Preise abrufen** drücken.
-4. Standortzugriff im Browser erlauben. Der Key wird ausschließlich im `localStorage` des jeweiligen Geräts gespeichert und steht nicht im GitHub-Quellcode.
+Vollständiges GitHub-Pages-Paket mit wiederhergestellten Fotos, MBUX-/Glass-Design, Foto-Karussell, iPhone-Safe-Areas, PWA-Unterstützung, Tankerkönig-E10-Abfrage, Google-Maps- und EnBW-Buttons sowie Kostenrechner.
 
-## Funktionen
-- Standortbasierte E10-Umkreissuche über Tankerkönig
-- Auswahl: günstigste, nächste oder durchschnittliche offene Tankstelle
-- Automatische Übernahme des E10-Preises in den Kostenrechner
-- Manuelle Eingabe als Fallback
-- Elektro-/Hybrid-/Benzinvergleich, Jahreskosten und Break-even
-- Google-Maps- und EnBW-mobility+-Links
-- PWA/Offline-Cache für die App-Oberfläche
+## Update auf GitHub
+1. Inhalt dieses Ordners vollständig in das Repository `Michelles-GLC-CostPilot` hochladen.
+2. Bestehende Dateien ersetzen. Besonders wichtig: den kompletten Ordner `assets/` mit hochladen.
+3. Commit-Nachricht: `Update auf v4 iPhone Edition`.
+4. Nach 1–2 Minuten die GitHub-Pages-Seite öffnen. Bei alter Anzeige in Safari die Seite neu laden oder Website-Daten löschen.
+
+Der Tankerkönig-API-Key wird nur im lokalen Speicher des verwendeten Geräts abgelegt.

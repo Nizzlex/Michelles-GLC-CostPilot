@@ -1,48 +1,10 @@
-const $=id=>document.getElementById(id);
-const ids=['ep','bp','ek','bl','hk','hl','lv','km','radius','priceMode'];
-const stateKey='michiesGlcOrganizerV3';
-const keyStorage='michiesTankkoenigApiKey';
-
-function formatEuro(v,d=2){return new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',minimumFractionDigits:d,maximumFractionDigits:d}).format(v)}
-function readNumber(id){const n=Number($(id).value);return Number.isFinite(n)?n:0}
-function save(){const data={};ids.forEach(id=>data[id]=$(id).value);localStorage.setItem(stateKey,JSON.stringify(data));localStorage.setItem(keyStorage,$('apiKey').value.trim())}
-function load(){try{const data=JSON.parse(localStorage.getItem(stateKey)||'{}');ids.forEach(id=>{if(data[id]!==undefined)$(id).value=data[id]});$('apiKey').value=localStorage.getItem(keyStorage)||''}catch(e){console.warn(e)}}
-
-function calculate(){
-  const ep=readNumber('ep'),bp=readNumber('bp'),ek=readNumber('ek'),bl=readNumber('bl'),hk=readNumber('hk'),hl=readNumber('hl'),loss=1+readNumber('lv')/100,km=readNumber('km');
-  const modes=[{name:'Elektro',icon:'🔋',cost:ek*loss*ep},{name:'Hybrid',icon:'🔄',cost:hk*loss*ep+hl*bp},{name:'Benzin',icon:'⛽',cost:bl*bp}];
-  $('summary').innerHTML=modes.map(m=>`<article class="metric"><div>${m.icon} ${m.name}</div><div class="value">${formatEuro(m.cost)} / 100 km</div><small>${formatEuro(m.cost/100,3)} / km · ${formatEuro(m.cost*km/100,0)} / Jahr</small></article>`).join('');
-  const ranked=[...modes].sort((a,b)=>a.cost-b.cost);const saving=ranked[1].cost-ranked[0].cost;
-  const breakEven=(ek*loss)>0?(bl*bp)/(ek*loss):0;
-  $('recommendation').innerHTML=`🏆 <strong>${ranked[0].name}</strong> ist aktuell am günstigsten – ${formatEuro(saving)} weniger je 100 km als ${ranked[1].name}.<br><small>Break-even Elektro/Benzin: ${formatEuro(breakEven)} pro kWh.</small>`;
-  $('distanceRows').innerHTML=[50,100,250,500,1000,5000].map(d=>`<tr><td>${d} km</td>${modes.map(m=>`<td>${formatEuro(m.cost*d/100)}</td>`).join('')}</tr>`).join('');
-  save();
-}
-
-function setStatus(text,type=''){$('fuelStatus').textContent=text;$('fuelStatus').className=`status ${type}`}
-function getLocation(){return new Promise((resolve,reject)=>{if(!navigator.geolocation)return reject(new Error('Standortabfrage wird von diesem Browser nicht unterstützt.'));navigator.geolocation.getCurrentPosition(resolve,reject,{enableHighAccuracy:true,timeout:15000,maximumAge:300000})})}
-
-async function loadFuelPrices(){
-  const key=$('apiKey').value.trim(); if(!key){setStatus('Bitte zuerst den Tankerkönig API-Key eingeben.','error');$('apiKey').focus();return}
-  save();setStatus('Standort wird ermittelt …');$('locateBtn').disabled=true;
-  try{
-    const pos=await getLocation();const {latitude:lat,longitude:lng}=pos.coords;const radius=$('radius').value;
-    const url=new URL('https://creativecommons.tankerkoenig.de/json/list.php');
-    url.search=new URLSearchParams({lat:String(lat),lng:String(lng),rad:String(radius),sort:'price',type:'e10',apikey:key});
-    const res=await fetch(url);if(!res.ok)throw new Error(`HTTP ${res.status}`);const data=await res.json();if(!data.ok)throw new Error(data.message||'API-Anfrage fehlgeschlagen.');
-    const stations=(data.stations||[]).filter(s=>s.isOpen&&Number.isFinite(Number(s.price))&&Number(s.price)>0);
-    if(!stations.length)throw new Error('Keine offene Tankstelle mit gemeldetem E10-Preis gefunden.');
-    const byPrice=[...stations].sort((a,b)=>a.price-b.price);const byDist=[...stations].sort((a,b)=>a.dist-b.dist);let selected;
-    if($('priceMode').value==='average') selected={price:stations.reduce((sum,s)=>sum+Number(s.price),0)/stations.length,name:`Durchschnitt aus ${stations.length} offenen Tankstellen`};
-    else if($('priceMode').value==='nearest') selected=byDist[0]; else selected=byPrice[0];
-    $('bp').value=Number(selected.price).toFixed(3);
-    $('stations').innerHTML=byPrice.slice(0,5).map(s=>`<div class="station"><div><strong>${s.brand||s.name||'Tankstelle'}</strong><small>${s.street||''} ${s.houseNumber||''}, ${s.place||''} · ${Number(s.dist).toFixed(1).replace('.',',')} km · ${s.isOpen?'geöffnet':'geschlossen'}</small></div><div class="price">${formatEuro(Number(s.price),3)}</div></div>`).join('');
-    $('mapsLink').href=`https://www.google.com/maps/search/Tankstelle/@${lat},${lng},13z`;
-    setStatus(`${formatEuro(Number(selected.price),3)} pro Liter wurde automatisch in den Kostenrechner übernommen. Stand: ${new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})} Uhr.`,'success');
-    calculate();
-  }catch(err){let message=err.message||'Unbekannter Fehler';if(err.code===1)message='Standortfreigabe wurde abgelehnt. Bitte in den Browser-Einstellungen erlauben oder den Benzinpreis manuell eintragen.';if(err.code===2)message='Standort konnte nicht bestimmt werden.';if(err.code===3)message='Standortabfrage hat zu lange gedauert.';setStatus(message,'error')}
-  finally{$('locateBtn').disabled=false}
-}
-
-$('calcBtn').addEventListener('click',calculate);$('locateBtn').addEventListener('click',loadFuelPrices);$('toggleKey').addEventListener('click',()=>{const input=$('apiKey');input.type=input.type==='password'?'text':'password';$('toggleKey').textContent=input.type==='password'?'Anzeigen':'Verbergen'});ids.forEach(id=>$(id).addEventListener('change',()=>{save();calculate()}));
+const $=id=>document.getElementById(id);const ids=['ep','bp','ek','bl','hk','hl','lv','km','radius','priceMode'];const stateKey='michiesGlcOrganizerV4',keyStorage='michiesTankkoenigApiKey';
+const euro=(v,d=2)=>new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',minimumFractionDigits:d,maximumFractionDigits:d}).format(v);const num=id=>{const n=Number($(id).value);return Number.isFinite(n)?n:0};
+function save(){const d={};ids.forEach(id=>d[id]=$(id).value);localStorage.setItem(stateKey,JSON.stringify(d));localStorage.setItem(keyStorage,$('apiKey').value.trim())}function load(){try{const d=JSON.parse(localStorage.getItem(stateKey)||'{}');ids.forEach(id=>{if(d[id]!=null)$(id).value=d[id]});$('apiKey').value=localStorage.getItem(keyStorage)||''}catch(e){console.warn(e)}}
+function calculate(){const ep=num('ep'),bp=num('bp'),ek=num('ek'),bl=num('bl'),hk=num('hk'),hl=num('hl'),loss=1+num('lv')/100,km=num('km');const modes=[{name:'Elektrisch',cost:ek*loss*ep},{name:'Hybrid',cost:hk*loss*ep+hl*bp},{name:'Benzin',cost:bl*bp}];$('electricCost').textContent=euro(modes[0].cost);$('hybridCost').textContent=euro(modes[1].cost);$('petrolCost').textContent=euro(modes[2].cost);const ranked=[...modes].sort((a,b)=>a.cost-b.cost),saving=ranked[1].cost-ranked[0].cost;$('winnerName').textContent=ranked[0].name;$('winnerSaving').textContent=`${euro(saving)} günstiger als ${ranked[1].name}`;const be=ek*loss>0?(bl*bp)/(ek*loss):0;$('recommendation').innerHTML=`<strong>${ranked[0].name} fahren</strong><br>${euro(saving)} Ersparnis je 100 km gegenüber ${ranked[1].name}. Jahreskosten: ${euro(ranked[0].cost*km/100,0)}.<br><small>Break-even Elektro/Benzin: ${euro(be)} pro kWh.</small>`;$('distanceRows').innerHTML=[50,100,250,500,1000,5000].map(d=>`<tr><td>${d} km</td>${modes.map(m=>`<td>${euro(m.cost*d/100)}</td>`).join('')}</tr>`).join('');save()}
+function setStatus(t,type=''){$('fuelStatus').textContent=t;$('fuelStatus').className=`status ${type}`}function getLocation(){return new Promise((res,rej)=>{if(!navigator.geolocation)return rej(new Error('Standortabfrage wird nicht unterstützt.'));navigator.geolocation.getCurrentPosition(res,rej,{enableHighAccuracy:true,timeout:15000,maximumAge:300000})})}
+async function loadFuelPrices(){const key=$('apiKey').value.trim();if(!key){setStatus('Bitte zuerst den Tankerkönig API-Key eingeben.','error');$('apiKey').focus();return}save();setStatus('Standort wird ermittelt …');$('locateBtn').disabled=true;try{const pos=await getLocation(),lat=pos.coords.latitude,lng=pos.coords.longitude;const url=new URL('https://creativecommons.tankerkoenig.de/json/list.php');url.search=new URLSearchParams({lat:String(lat),lng:String(lng),rad:$('radius').value,sort:'price',type:'e10',apikey:key});const r=await fetch(url);if(!r.ok)throw new Error(`HTTP ${r.status}`);const data=await r.json();if(!data.ok)throw new Error(data.message||'API-Anfrage fehlgeschlagen.');const stations=(data.stations||[]).filter(s=>s.isOpen&&Number(s.price)>0);if(!stations.length)throw new Error('Keine offene Tankstelle mit E10-Preis gefunden.');const byPrice=[...stations].sort((a,b)=>a.price-b.price),byDist=[...stations].sort((a,b)=>a.dist-b.dist);let selected=$('priceMode').value==='nearest'?byDist[0]:byPrice[0];if($('priceMode').value==='average')selected={price:stations.reduce((a,s)=>a+Number(s.price),0)/stations.length,name:`Durchschnitt aus ${stations.length} Tankstellen`};$('bp').value=Number(selected.price).toFixed(3);$('stations').innerHTML=byPrice.slice(0,5).map(s=>`<div class="station"><div><strong>${s.brand||s.name||'Tankstelle'}</strong><small>${s.street||''} ${s.houseNumber||''}, ${s.place||''} · ${Number(s.dist).toFixed(1).replace('.',',')} km</small></div><div class="price">${euro(Number(s.price),3)}</div></div>`).join('');$('mapsLink').href=`https://www.google.com/maps/search/Tankstelle/@${lat},${lng},13z`;setStatus(`${euro(Number(selected.price),3)} pro Liter wurde übernommen · ${new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})} Uhr.`,'success');calculate()}catch(e){let m=e.message||'Unbekannter Fehler';if(e.code===1)m='Standortfreigabe abgelehnt. Bitte in den iPhone-Einstellungen für Safari erlauben.';if(e.code===2)m='Standort konnte nicht bestimmt werden.';if(e.code===3)m='Standortabfrage hat zu lange gedauert.';setStatus(m,'error')}finally{$('locateBtn').disabled=false}}
+$('calcBtn').addEventListener('click',calculate);$('locateBtn').addEventListener('click',loadFuelPrices);$('toggleKey').addEventListener('click',()=>{const i=$('apiKey');i.type=i.type==='password'?'text':'password';$('toggleKey').textContent=i.type==='password'?'Anzeigen':'Verbergen'});ids.forEach(id=>$(id).addEventListener('change',calculate));
+const gallery=$('gallery'),dots=[...document.querySelectorAll('#galleryDots button')];gallery.addEventListener('scroll',()=>{const i=Math.round(gallery.scrollLeft/gallery.clientWidth);dots.forEach((d,n)=>d.classList.toggle('active',n===i));$('slideCounter').textContent=`${i+1} / ${dots.length}`},{passive:true});dots.forEach((d,i)=>d.addEventListener('click',()=>gallery.scrollTo({left:i*gallery.clientWidth,behavior:'smooth'})));
+let deferredPrompt;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('installBtn').hidden=false});$('installBtn').addEventListener('click',async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('installBtn').hidden=true});
 load();calculate();if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(console.warn));
