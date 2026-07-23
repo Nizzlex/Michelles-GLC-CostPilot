@@ -1,0 +1,28 @@
+MICHIE’S GLC ORGANIZER – UPDATE 5.3
+
+ENTHALTEN:
+- Neues Hero-Foto und neue App-Icons aus Update 5.2
+- Cache-Fix mit versionierten Bilddateien
+- EnBW mobility+ Button für iPhone-Kurzbefehl
+- Einrichtungsanleitung direkt in der App
+- App-Store-Fallback
+
+UPLOAD ZU GITHUB:
+1. ZIP-Datei entpacken.
+2. GitHub-Repository öffnen.
+3. Add file > Upload files wählen.
+4. ALLE Dateien aus diesem Ordner hochladen, nicht den Ordner selbst.
+5. Vorhandene Dateien ersetzen.
+6. Commit-Nachricht: Update 5.3 – mobility+ Kurzbefehl und iPhone-Anleitung
+7. Nach dem Upload ca. 2 Minuten warten.
+8. Die Web-App auf dem iPhone vollständig schließen und neu öffnen.
+
+KURZBEFEHL EINMALIG AUF DEM IPHONE ANLEGEN:
+1. Kurzbefehle öffnen.
+2. + antippen.
+3. Aktion „App öffnen“ hinzufügen.
+4. EnBW mobility+ auswählen.
+5. Kurzbefehl exakt so benennen: EnBW mobility öffnen
+
+HINWEIS:
+Der eigentliche iPhone-Kurzbefehl kann aus Sicherheitsgründen nicht automatisch durch eine Webseite installiert werden. Das Update enthält deshalb den direkten Aufruf und eine sichtbare Schritt-für-Schritt-Anleitung.

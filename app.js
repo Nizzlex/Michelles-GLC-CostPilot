@@ -8,3 +8,22 @@ $('calcBtn').addEventListener('click',calculate);$('locateBtn').addEventListener
 const gallery=$('gallery'),dots=[...document.querySelectorAll('#galleryDots button')];gallery.addEventListener('scroll',()=>{const i=Math.round(gallery.scrollLeft/gallery.clientWidth);dots.forEach((d,n)=>d.classList.toggle('active',n===i));$('slideCounter').textContent=`${i+1} / ${dots.length}`},{passive:true});dots.forEach((d,i)=>d.addEventListener('click',()=>gallery.scrollTo({left:i*gallery.clientWidth,behavior:'smooth'})));
 let deferredPrompt;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('installBtn').hidden=false});$('installBtn').addEventListener('click',async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('installBtn').hidden=true});
 load();calculate();if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(console.warn));
+
+
+function openEnBW() {
+  const shortcutUrl = 'shortcuts://run-shortcut?name=EnBW%20mobility%20%C3%B6ffnen';
+  const appStoreUrl = 'https://apps.apple.com/de/app/enbw-mobility-e-auto-laden/id1232210521';
+  const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.enbw.ev';
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const isAndroid = /Android/i.test(navigator.userAgent);
+
+  if (isIOS) {
+    window.location.href = shortcutUrl;
+    return;
+  }
+
+  window.open(isAndroid ? playStoreUrl : appStoreUrl, '_blank', 'noopener');
+}
+
+const mobilityLink = $('mobilityLink');
+if (mobilityLink) mobilityLink.addEventListener('click', openEnBW);

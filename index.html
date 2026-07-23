@@ -8,15 +8,15 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Michie’s GLC">
   <title>Michie’s GLC Organizer</title>
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="apple-touch-icon" href="icon-192.png?v=5.1">
-  <link rel="icon" href="favicon.png?v=5.1">
-  <link rel="stylesheet" href="styles.css?v=5.1">
+  <link rel="manifest" href="manifest-v52.webmanifest">
+  <link rel="apple-touch-icon" href="icon-192-v52.png">
+  <link rel="icon" href="favicon-v52.png">
+  <link rel="stylesheet" href="styles.css?v=5.3">
 </head>
 <body>
 <div class="app-shell">
   <header class="hero" id="home">
-    <img class="hero-image" src="michie-hero.jpg?v=5.1" alt="Michie">
+    <img class="hero-image" src="michie-hero-v52.jpg" alt="Michie">
     <div class="hero-shade"></div>
     <div class="hero-top">
       <span class="vehicle-pill">GLC 300e · X253</span>
@@ -81,9 +81,24 @@
       <div class="table-wrap"><table><thead><tr><th>Strecke</th><th>Elektro</th><th>Hybrid</th><th>Benzin</th></tr></thead><tbody id="distanceRows"></tbody></table></div>
     </section>
 
+
+    <section class="panel setup-info" id="mobilitySetup">
+      <div class="section-head"><div><p class="eyebrow">IPHONE-EINRICHTUNG</p><h2>EnBW mobility+ direkt öffnen</h2></div><span>einmalig</span></div>
+      <p>Damit der Button direkt die mobility+ App startet, lege auf diesem iPhone einen Kurzbefehl an:</p>
+      <ol>
+        <li>Die App <strong>Kurzbefehle</strong> öffnen.</li>
+        <li>Mit <strong>＋</strong> einen neuen Kurzbefehl erstellen.</li>
+        <li>Die Aktion <strong>App öffnen</strong> hinzufügen.</li>
+        <li>Als App <strong>EnBW mobility+</strong> auswählen.</li>
+        <li>Den Kurzbefehl exakt <code>EnBW mobility öffnen</code> nennen.</li>
+      </ol>
+      <p class="setup-note">Ist der Kurzbefehl noch nicht eingerichtet, erscheint beim Antippen ein iOS-Hinweis. Über „App Store öffnen“ gelangst du alternativ zur mobility+ App.</p>
+      <a class="secondary-action" href="https://apps.apple.com/de/app/enbw-mobility-e-auto-laden/id1232210521" target="_blank" rel="noopener">mobility+ im App Store öffnen</a>
+    </section>
+
     <section class="quick-actions">
       <a id="mapsLink" href="https://www.google.com/maps/search/Tankstelle" target="_blank" rel="noopener"><span>⌖</span><strong>Google Maps</strong><small>Tankstellen öffnen</small></a>
-      <a id="mobilityLink" href="shortcuts://run-shortcut?name=EnBW%20mobility%20%C3%B6ffnen"><span>⚡</span><strong>EnBW mobility+</strong><small>Ladesäulen in der App suchen</small></a>
+      <button id="mobilityLink" class="quick-action-button" type="button"><span>⚡</span><strong>EnBW mobility+</strong><small>Ladesäulen in der App suchen</small></button>
     </section>
   </main>
 
@@ -95,6 +110,6 @@
     <a href="#moments"><span>♡</span>Momente</a>
   </nav>
 </div>
-<script src="app.js?v=5.1" defer></script>
+<script src="app.js?v=5.3" defer></script>
 </body>
 </html>
