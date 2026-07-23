@@ -1,0 +1,29 @@
+MICHIE'S GLC ORGANIZER – UPDATE 5.1
+
+Enthaltene Änderungen:
+- neues Hero-Foto: michie-hero.jpg
+- neue App-Icons: icon-192.png, icon-512.png und favicon.png
+- EnBW-mobility+-Button öffnet auf dem iPhone den Kurzbefehl „EnBW mobility öffnen“
+- Cache-Version erhöht, damit iPhone/Safari die neuen Bilder lädt
+
+UPLOAD AUF GITHUB:
+1. Repository öffnen: Nizzlex/Michelles-GLC-CostPilot
+2. Add file → Upload files
+3. ALLE Dateien aus diesem Update-Ordner auswählen.
+4. Bei Rückfrage bestehende Dateien ersetzen.
+5. Commit message: Update 5.1 – neues Hero, Icon und mobility+ App-Link
+6. Commit changes drücken.
+
+WICHTIG – EINMALIG AUF DEM IPHONE:
+1. Kurzbefehle-App öffnen.
+2. Neuen Kurzbefehl mit dem Namen „EnBW mobility öffnen“ erstellen.
+3. Aktion „App öffnen“ wählen.
+4. Als App „EnBW mobility+“ auswählen.
+5. Speichern.
+
+Danach öffnet der EnBW-Button im GLC Organizer direkt die mobility+ App.
+
+FALLS NOCH DAS ALTE ICON SICHTBAR IST:
+- alte Home-Bildschirm-Verknüpfung löschen
+- Safari-Seite neu laden
+- erneut „Zum Home-Bildschirm“ hinzufügen
