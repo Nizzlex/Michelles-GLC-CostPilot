@@ -1,0 +1,20 @@
+MICHIE'S GLC ORGANIZER – VERSION 6.0.1 FLAT KORREKTUR
+
+1. ZIP entpacken.
+2. ALLE Dateien markieren und direkt in das Hauptverzeichnis des GitHub-Repositories hochladen.
+3. Bei GitHub „Add files“ > „Upload files“ wählen.
+4. „Commit changes“ bestätigen.
+5. Wichtig: Vorhandene Dateien mit denselben Namen ersetzen, insbesondere:
+   index.html
+   service-worker.js
+   manifest.webmanifest
+   michie-hero.jpg
+   michie-hero-v52.jpg
+   hero-photo.jpg
+   glc.jpg
+6. Danach 2–5 Minuten warten.
+7. Auf dem iPhone die Seite einmal mit diesem Zusatz öffnen:
+   https://nizzlex.github.io/Michelles-GLC-CostPilot/?v=601
+8. Falls die alte installierte Web-App weiterhin erscheint, diese vom Home-Bildschirm löschen und neu hinzufügen.
+
+Die korrigierte index.html verweist nicht mehr auf einen nicht vorhandenen assets-Unterordner.
