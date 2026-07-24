@@ -1,6 +1,52 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#071019"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>Michie’s GLC Organizer 6.0</title><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png?v=6.0.1"><link rel="stylesheet" href="styles.css"></head><body><header class="hero"><img src="hero-photo.jpg?v=6.0.1" alt="Michie mit ihrem Mercedes GLC 300e"><div class="shade"></div><div class="hero-copy"><span>GLC 300e · X253</span><h1>Michie’s<br>GLC Organizer</h1><p>Version 6.0 · Connected Drive</p></div></header><main>
-<section class="grid"><article><small>Heute lohnt sich</small><strong id="winner">–</strong><em id="saving">Werte werden berechnet</em></article><article><small>Elektrisch</small><strong id="electricCost">–</strong><em>pro 100 km</em></article><article><small>Hybrid</small><strong id="hybridCost">–</strong><em>pro 100 km</em></article><article><small>Benzin</small><strong id="petrolCost">–</strong><em>pro 100 km</em></article></section>
-<section class="panel vehicle"><div><small>UNSER GLC</small><h2>Mercedes GLC 300e</h2><p>AMG-Line · 4MATIC · EZ 02/2022</p></div><img src="vehicle-photo.jpg" alt="Michie mit ihrem schwarzen Mercedes GLC 300e"></section>
-<section class="panel"><div class="head"><div><small>MERCEDES CONNECT</small><h2>Fahrzeugdaten</h2></div><span id="connectionBadge" class="badge offline">Nicht verbunden</span></div><p class="muted">Live-Daten werden über einen sicheren OAuth-Backend-Endpunkt geladen. Zugangsdaten bleiben außerhalb von GitHub Pages.</p><div class="actions"><button id="connectBtn">Mercedes verbinden</button><button id="refreshBtn" class="secondary">Daten aktualisieren</button><a class="button secondary" href="https://me.secure.mercedes-benz.com/" target="_blank" rel="noopener">Mercedes-Benz öffnen</a></div><div class="stats"><div><small>Kilometerstand</small><strong id="odo">–</strong></div><div><small>Tank</small><strong id="fuel">–</strong></div><div><small>HV-Batterie</small><strong id="soc">–</strong></div><div><small>Elektrische Reichweite</small><strong id="range">–</strong></div><div><small>Ø Stromverbrauch</small><strong id="liveElectric">–</strong></div><div><small>Ø Benzinverbrauch</small><strong id="livePetrol">–</strong></div></div><p id="syncInfo" class="muted">Noch keine Synchronisierung.</p></section>
-<section class="panel"><div class="head"><div><small>KOSTENRECHNER</small><h2>Live-Verbrauch vergleichen</h2></div><button id="calcBtn">Berechnen</button></div><div class="form"><label>Strompreis<input id="ep" type="number" step="0.01" value="0.41"><span>€/kWh</span></label><label>E10-Preis<input id="bp" type="number" step="0.001" value="1.90"><span>€/l</span></label><label>Elektroverbrauch<input id="ek" type="number" step="0.1" value="23"><span>kWh/100 km</span></label><label>Benzinverbrauch<input id="bl" type="number" step="0.1" value="8.7"><span>l/100 km</span></label><label>Hybrid Strom<input id="hk" type="number" step="0.1" value="11.5"><span>kWh/100 km</span></label><label>Hybrid Benzin<input id="hl" type="number" step="0.1" value="3.8"><span>l/100 km</span></label><label>Ladeverluste<input id="lv" type="number" step="1" value="10"><span>%</span></label><label>Jahresfahrleistung<input id="km" type="number" step="500" value="15000"><span>km</span></label></div><div id="recommendation" class="recommendation"></div></section>
-<section class="panel photo-gallery"><div class="head"><div><small>FOTOGALERIE</small><h2>Unser GLC</h2></div></div><div class="gallery-grid"><img src="glc-photo-1.jpg?v=6.0.1" alt="Mercedes GLC vor der Fahrzeugübergabe"><img src="glc-photo-2.jpg?v=6.0.1" alt="Michie neben dem abgedeckten Mercedes GLC"><img src="glc-photo-3.jpg?v=6.0.1" alt="Michie mit ihrem Mercedes GLC 300e"><img src="glc-photo-4.jpg?v=6.0.1" alt="Schwarzer Mercedes GLC 300e bei der Übergabe"></div></section></main><footer>Michie’s GLC Organizer · v6.0 · privat · PWA</footer><script src="config.js"></script><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070b10"><title>Michie’s GLC Organizer 6.1</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="favicon.png"><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="hero"><img src="michie-hero.jpg" alt="Michie mit Mercedes GLC 300e"><div class="shade"></div><div class="heroText"><small>GLC 300e · X253</small><h1>Michie’s<br>GLC Organizer</h1><b>Version 6.1 · Repair Edition</b></div></header>
+<main>
+<section class="quick">
+<a href="#calculator">🧮<span>Kosten</span></a><button id="mapsBtn">🗺️<span>Google Maps</span></button><button id="mobilityBtn">⚡<span>mobility+</span></button><button id="mercedesAppBtn">🚘<span>Mercedes App</span></button>
+</section>
+<section class="panel" id="calculator"><div class="head"><div><small>KOSTENRECHNER</small><h2>Heute lohnt sich</h2></div><strong id="bestBadge">–</strong></div>
+<form id="calcForm" class="grid">
+<label>Strompreis<div><input id="electricityPrice" inputmode="decimal"><span>€/kWh</span></div></label>
+<label>E10-Preis<div><input id="fuelPrice" inputmode="decimal"><span>€/l</span></div></label>
+<label>Elektroverbrauch<div><input id="electricConsumption" inputmode="decimal"><span>kWh/100 km</span></div></label>
+<label>Benzinverbrauch<div><input id="fuelConsumption" inputmode="decimal"><span>l/100 km</span></div></label>
+<label>Hybrid Strom<div><input id="hybridElectric" inputmode="decimal"><span>kWh/100 km</span></div></label>
+<label>Hybrid Benzin<div><input id="hybridFuel" inputmode="decimal"><span>l/100 km</span></div></label>
+<label>Ladeverluste<div><input id="chargingLoss" inputmode="decimal"><span>%</span></div></label>
+<label>Jahresfahrleistung<div><input id="annualDistance" inputmode="numeric"><span>km</span></div></label>
+<div class="actions"><button type="submit">Berechnen</button><button type="button" id="resetBtn" class="secondary">Standardwerte</button></div>
+</form><p id="error" class="error" hidden></p>
+<div class="recommend"><div class="modeIcon" id="modeIcon">⚡</div><h2 id="bestMode">–</h2><p id="bestText">Werte werden berechnet.</p><div id="ranking"></div></div>
+</section>
+<section class="cards" id="cards">
+<article data-mode="electric"><small>ELEKTRISCH</small><strong id="electricCost">–</strong><span>/ 100 km</span><p id="electricYear">– pro Jahr</p></article>
+<article data-mode="hybrid"><small>HYBRID</small><strong id="hybridCost">–</strong><span>/ 100 km</span><p id="hybridYear">– pro Jahr</p></article>
+<article data-mode="fuel"><small>BENZIN</small><strong id="fuelCost">–</strong><span>/ 100 km</span><p id="fuelYear">– pro Jahr</p></article>
+</section>
+<section class="panel" id="tanker"><div class="head"><div><small>TANKERKÖNIG</small><h2>E10-Preis am Standort</h2></div><strong id="tankStatus">Nicht geladen</strong></div>
+<div class="grid"><label>Eigener API-Key<div><input id="tankApiKey" type="password" autocomplete="off" placeholder="API-Key lokal speichern"></div></label><label>Suchradius<div><input id="tankRadius" inputmode="decimal" value="5"><span>km</span></div></label></div>
+<div class="actions"><button id="tankSaveBtn" type="button">Key speichern</button><button id="tankLoadBtn" type="button">Standort & Preise laden</button></div><p class="muted">Der Key bleibt ausschließlich im lokalen Speicher dieses Geräts.</p><div id="stations"></div>
+</section>
+<section class="panel"><div class="head"><div><small>APP-VERKNÜPFUNGEN</small><h2>iPhone öffnen</h2></div></div>
+<label>mobility+ Kurzbefehl-Name<div><input id="shortcutName" placeholder="z. B. mobility+ öffnen"></div></label>
+<div class="actions"><button id="saveShortcutBtn" type="button">Kurzbefehl speichern</button><button id="testShortcutBtn" type="button">mobility+ öffnen</button></div>
+<p class="muted">Die App nutzt <code>shortcuts://run-shortcut?name=…</code>. Der Name muss exakt mit deinem vorhandenen iPhone-Kurzbefehl übereinstimmen.</p>
+</section>
+<section class="panel" id="mercedes"><div class="head"><div><small>MERCEDES-BENZ LIVE-DATEN</small><h2>Echter Backend-Connector</h2></div><strong id="mbStatus">Nicht konfiguriert</strong></div>
+<label>Backend-Endpunkt<div><input id="mbEndpoint" type="url" placeholder="https://dein-backend.example/api/vehicle"></div></label>
+<label>Zugriffstoken (optional)<div><input id="mbToken" type="password" autocomplete="off"></div></label>
+<div class="actions"><button id="saveMbBtn" type="button">Connector speichern</button><button id="loadMbBtn" type="button">Fahrzeugdaten laden</button></div>
+<p class="muted">GitHub Pages kann Mercedes OAuth nicht sicher allein ausführen. Dieser Connector erwartet ein eigenes HTTPS-Backend und setzt keine erfundene Mercedes-Webadresse als Livezugriff ein.</p>
+<div class="vehicleData"><div><span>Kilometerstand</span><b id="mbMileage">–</b></div><div><span>Tank</span><b id="mbFuel">–</b></div><div><span>HV-Batterie</span><b id="mbBattery">–</b></div><div><span>Elektrische Reichweite</span><b id="mbRange">–</b></div><div><span>Ø Stromverbrauch</span><b id="mbElecCons">–</b></div><div><span>Ø Benzinverbrauch</span><b id="mbFuelCons">–</b></div></div>
+</section>
+<section class="panel photo"><small>UNSER GLC</small><h2>Mercedes GLC 300e</h2><img src="glc.jpg" alt="Schwarzer Mercedes GLC 300e"></section>
+</main>
+<footer>Michie’s GLC Organizer · v6.1 · privat · PWA</footer><script src="app.js"></script>
+</body></html>
