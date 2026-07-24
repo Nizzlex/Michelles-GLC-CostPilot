@@ -1,52 +1,124 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#070b10"><title>Michie’s GLC Organizer 6.1</title>
-<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="favicon.png"><link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#071019">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Michie’s GLC Organizer 6.1</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-192.png?v=6.1">
+  <link rel="stylesheet" href="styles.css?v=6.1">
 </head>
 <body>
-<header class="hero"><img src="michie-hero.jpg" alt="Michie mit Mercedes GLC 300e"><div class="shade"></div><div class="heroText"><small>GLC 300e · X253</small><h1>Michie’s<br>GLC Organizer</h1><b>Version 6.1 · Repair Edition</b></div></header>
+<header class="hero">
+  <img src="hero-photo.jpg?v=6.1" alt="Michie mit ihrem Mercedes GLC 300e">
+  <div class="shade"></div>
+  <div class="hero-copy">
+    <span>GLC 300e · X253</span>
+    <h1>Michie’s<br>GLC Organizer</h1>
+    <p>Version 6.1 · Manuelle Fahrzeugdaten</p>
+  </div>
+</header>
+
 <main>
-<section class="quick">
-<a href="#calculator">🧮<span>Kosten</span></a><button id="mapsBtn">🗺️<span>Google Maps</span></button><button id="mobilityBtn">⚡<span>mobility+</span></button><button id="mercedesAppBtn">🚘<span>Mercedes App</span></button>
-</section>
-<section class="panel" id="calculator"><div class="head"><div><small>KOSTENRECHNER</small><h2>Heute lohnt sich</h2></div><strong id="bestBadge">–</strong></div>
-<form id="calcForm" class="grid">
-<label>Strompreis<div><input id="electricityPrice" inputmode="decimal"><span>€/kWh</span></div></label>
-<label>E10-Preis<div><input id="fuelPrice" inputmode="decimal"><span>€/l</span></div></label>
-<label>Elektroverbrauch<div><input id="electricConsumption" inputmode="decimal"><span>kWh/100 km</span></div></label>
-<label>Benzinverbrauch<div><input id="fuelConsumption" inputmode="decimal"><span>l/100 km</span></div></label>
-<label>Hybrid Strom<div><input id="hybridElectric" inputmode="decimal"><span>kWh/100 km</span></div></label>
-<label>Hybrid Benzin<div><input id="hybridFuel" inputmode="decimal"><span>l/100 km</span></div></label>
-<label>Ladeverluste<div><input id="chargingLoss" inputmode="decimal"><span>%</span></div></label>
-<label>Jahresfahrleistung<div><input id="annualDistance" inputmode="numeric"><span>km</span></div></label>
-<div class="actions"><button type="submit">Berechnen</button><button type="button" id="resetBtn" class="secondary">Standardwerte</button></div>
-</form><p id="error" class="error" hidden></p>
-<div class="recommend"><div class="modeIcon" id="modeIcon">⚡</div><h2 id="bestMode">–</h2><p id="bestText">Werte werden berechnet.</p><div id="ranking"></div></div>
-</section>
-<section class="cards" id="cards">
-<article data-mode="electric"><small>ELEKTRISCH</small><strong id="electricCost">–</strong><span>/ 100 km</span><p id="electricYear">– pro Jahr</p></article>
-<article data-mode="hybrid"><small>HYBRID</small><strong id="hybridCost">–</strong><span>/ 100 km</span><p id="hybridYear">– pro Jahr</p></article>
-<article data-mode="fuel"><small>BENZIN</small><strong id="fuelCost">–</strong><span>/ 100 km</span><p id="fuelYear">– pro Jahr</p></article>
-</section>
-<section class="panel" id="tanker"><div class="head"><div><small>TANKERKÖNIG</small><h2>E10-Preis am Standort</h2></div><strong id="tankStatus">Nicht geladen</strong></div>
-<div class="grid"><label>Eigener API-Key<div><input id="tankApiKey" type="password" autocomplete="off" placeholder="API-Key lokal speichern"></div></label><label>Suchradius<div><input id="tankRadius" inputmode="decimal" value="5"><span>km</span></div></label></div>
-<div class="actions"><button id="tankSaveBtn" type="button">Key speichern</button><button id="tankLoadBtn" type="button">Standort & Preise laden</button></div><p class="muted">Der Key bleibt ausschließlich im lokalen Speicher dieses Geräts.</p><div id="stations"></div>
-</section>
-<section class="panel"><div class="head"><div><small>APP-VERKNÜPFUNGEN</small><h2>iPhone öffnen</h2></div></div>
-<label>mobility+ Kurzbefehl-Name<div><input id="shortcutName" placeholder="z. B. mobility+ öffnen"></div></label>
-<div class="actions"><button id="saveShortcutBtn" type="button">Kurzbefehl speichern</button><button id="testShortcutBtn" type="button">mobility+ öffnen</button></div>
-<p class="muted">Die App nutzt <code>shortcuts://run-shortcut?name=…</code>. Der Name muss exakt mit deinem vorhandenen iPhone-Kurzbefehl übereinstimmen.</p>
-</section>
-<section class="panel" id="mercedes"><div class="head"><div><small>MERCEDES-BENZ LIVE-DATEN</small><h2>Echter Backend-Connector</h2></div><strong id="mbStatus">Nicht konfiguriert</strong></div>
-<label>Backend-Endpunkt<div><input id="mbEndpoint" type="url" placeholder="https://dein-backend.example/api/vehicle"></div></label>
-<label>Zugriffstoken (optional)<div><input id="mbToken" type="password" autocomplete="off"></div></label>
-<div class="actions"><button id="saveMbBtn" type="button">Connector speichern</button><button id="loadMbBtn" type="button">Fahrzeugdaten laden</button></div>
-<p class="muted">GitHub Pages kann Mercedes OAuth nicht sicher allein ausführen. Dieser Connector erwartet ein eigenes HTTPS-Backend und setzt keine erfundene Mercedes-Webadresse als Livezugriff ein.</p>
-<div class="vehicleData"><div><span>Kilometerstand</span><b id="mbMileage">–</b></div><div><span>Tank</span><b id="mbFuel">–</b></div><div><span>HV-Batterie</span><b id="mbBattery">–</b></div><div><span>Elektrische Reichweite</span><b id="mbRange">–</b></div><div><span>Ø Stromverbrauch</span><b id="mbElecCons">–</b></div><div><span>Ø Benzinverbrauch</span><b id="mbFuelCons">–</b></div></div>
-</section>
-<section class="panel photo"><small>UNSER GLC</small><h2>Mercedes GLC 300e</h2><img src="glc.jpg" alt="Schwarzer Mercedes GLC 300e"></section>
+  <section class="grid summary-grid">
+    <article><small>Heute lohnt sich</small><strong id="winner">–</strong><em id="saving">Werte werden berechnet</em></article>
+    <article><small>Elektrisch</small><strong id="electricCost">–</strong><em>pro 100 km</em></article>
+    <article><small>Hybrid</small><strong id="hybridCost">–</strong><em>pro 100 km</em></article>
+    <article><small>Benzin</small><strong id="petrolCost">–</strong><em>pro 100 km</em></article>
+  </section>
+
+  <section class="panel vehicle">
+    <div><small>UNSER GLC</small><h2>Mercedes GLC 300e</h2><p>AMG-Line · 4MATIC · EZ 02/2022</p></div>
+    <img src="vehicle-photo.jpg?v=6.1" alt="Michie mit ihrem schwarzen Mercedes GLC 300e">
+  </section>
+
+  <section class="panel">
+    <div class="head">
+      <div><small>FAHRZEUGDATEN</small><h2>Werte manuell eintragen</h2></div>
+      <span class="badge online">Ohne Backend</span>
+    </div>
+    <p class="muted">Alle Werte bleiben ausschließlich auf diesem Gerät gespeichert. Nach jeder Änderung wird die Übersicht automatisch neu berechnet.</p>
+
+    <div class="form">
+      <label>Kilometerstand<input id="odoInput" type="number" inputmode="decimal" min="0" step="1" value="45680"><span>km</span></label>
+      <label>Tankfüllstand<input id="fuelLevel" type="number" inputmode="decimal" min="0" max="100" step="1" value="64"><span>%</span></label>
+      <label>HV-Batterie<input id="batteryLevel" type="number" inputmode="decimal" min="0" max="100" step="1" value="78"><span>%</span></label>
+      <label>Tankgröße<input id="tankSize" type="number" inputmode="decimal" min="1" step="0.1" value="50"><span>Liter</span></label>
+      <label>Nutzbare Batterie<input id="batteryCapacity" type="number" inputmode="decimal" min="1" step="0.1" value="11.1"><span>kWh</span></label>
+      <label>Jahresfahrleistung<input id="km" type="number" inputmode="decimal" min="0" step="500" value="15000"><span>km</span></label>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="head">
+      <div><small>PREISE & VERBRAUCH</small><h2>Kostenrechner</h2></div>
+      <button id="calcBtn" type="button">Berechnen</button>
+    </div>
+    <div class="form">
+      <label>Strompreis<input id="ep" type="number" inputmode="decimal" min="0" step="0.01" value="0.41"><span>€/kWh</span></label>
+      <label>E10-Preis<input id="bp" type="number" inputmode="decimal" min="0" step="0.001" value="1.90"><span>€/l</span></label>
+      <label>Elektroverbrauch<input id="ek" type="number" inputmode="decimal" min="0" step="0.1" value="23"><span>kWh/100 km</span></label>
+      <label>Benzinverbrauch<input id="bl" type="number" inputmode="decimal" min="0" step="0.1" value="8.7"><span>l/100 km</span></label>
+      <label>Hybrid Strom<input id="hk" type="number" inputmode="decimal" min="0" step="0.1" value="11.5"><span>kWh/100 km</span></label>
+      <label>Hybrid Benzin<input id="hl" type="number" inputmode="decimal" min="0" step="0.1" value="3.8"><span>l/100 km</span></label>
+      <label>Ladeverluste<input id="lv" type="number" inputmode="decimal" min="0" max="50" step="1" value="10"><span>%</span></label>
+    </div>
+    <div id="recommendation" class="recommendation"></div>
+  </section>
+
+  <section class="panel">
+    <div class="head"><div><small>AKTUELLER STATUS</small><h2>Errechnete Fahrzeugwerte</h2></div></div>
+    <div class="stats">
+      <div><small>Kilometerstand</small><strong id="odo">–</strong></div>
+      <div><small>Tankinhalt</small><strong id="fuelLitres">–</strong></div>
+      <div><small>Batterieinhalt</small><strong id="batteryKwh">–</strong></div>
+      <div><small>Elektrische Reichweite</small><strong id="electricRange">–</strong></div>
+      <div><small>Benzin-Reichweite</small><strong id="petrolRange">–</strong></div>
+      <div><small>Gesamtreichweite</small><strong id="totalRange">–</strong></div>
+      <div><small>Wert im Tank</small><strong id="fuelValue">–</strong></div>
+      <div><small>Wert in Batterie</small><strong id="batteryValue">–</strong></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="head"><div><small>KOSTENÜBERSICHT</small><h2>Vergleich und Jahreskosten</h2></div></div>
+    <div class="comparison-table" role="table" aria-label="Kostenvergleich">
+      <div class="table-row table-head" role="row"><span>Fahrmodus</span><span>€/100 km</span><span>€/km</span><span>pro Jahr</span></div>
+      <div class="table-row" role="row"><strong>Elektrisch</strong><span id="electric100">–</span><span id="electricKm">–</span><span id="electricYear">–</span></div>
+      <div class="table-row" role="row"><strong>Hybrid</strong><span id="hybrid100">–</span><span id="hybridKm">–</span><span id="hybridYear">–</span></div>
+      <div class="table-row" role="row"><strong>Benzin</strong><span id="petrol100">–</span><span id="petrolKm">–</span><span id="petrolYear">–</span></div>
+    </div>
+    <div class="mini-grid">
+      <article><small>Volle Batterieladung</small><strong id="fullChargeCost">–</strong></article>
+      <article><small>Volle Tankfüllung</small><strong id="fullTankCost">–</strong></article>
+      <article><small>Strom-Break-even</small><strong id="breakEvenElectricity">–</strong><em>gegen Benzin</em></article>
+      <article><small>Benzin-Break-even</small><strong id="breakEvenPetrol">–</strong><em>gegen Elektro</em></article>
+    </div>
+  </section>
+
+  <section class="panel quick-links">
+    <div class="head"><div><small>SCHNELLZUGRIFF</small><h2>Unterwegs</h2></div></div>
+    <div class="actions">
+      <a class="button" href="https://www.google.com/maps/search/Tankstelle/" target="_blank" rel="noopener">Tankstellen in Google Maps</a>
+      <a class="button secondary" href="https://www.google.com/maps/search/Ladestation/" target="_blank" rel="noopener">Ladesäulen in Google Maps</a>
+      <a class="button secondary" href="https://www.enbw.com/elektromobilitaet/produkte/mobilityplus-app" target="_blank" rel="noopener">mobility+ öffnen</a>
+    </div>
+  </section>
+
+  <section class="panel photo-gallery">
+    <div class="head"><div><small>FOTOGALERIE</small><h2>Unser GLC</h2></div></div>
+    <div class="gallery-grid">
+      <img src="glc-photo-1.jpg?v=6.1" alt="Mercedes GLC vor der Fahrzeugübergabe">
+      <img src="glc-photo-2.jpg?v=6.1" alt="Michie neben dem abgedeckten Mercedes GLC">
+      <img src="glc-photo-3.jpg?v=6.1" alt="Michie mit ihrem Mercedes GLC 300e">
+      <img src="glc-photo-4.jpg?v=6.1" alt="Schwarzer Mercedes GLC 300e bei der Übergabe">
+    </div>
+  </section>
 </main>
-<footer>Michie’s GLC Organizer · v6.1 · privat · PWA</footer><script src="app.js"></script>
-</body></html>
+<footer>Michie’s GLC Organizer · v6.1 · manuell · PWA</footer>
+<script src="app.js?v=6.1"></script>
+</body>
+</html>

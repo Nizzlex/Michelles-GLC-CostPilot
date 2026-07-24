@@ -1,25 +1,34 @@
-MICHIE'S GLC ORGANIZER 6.1 – REPARATURUPDATE
+MICHIE'S GLC ORGANIZER – UPDATE 6.1 MANUELL
 
-1. Diese 6 Dateien in das Hauptverzeichnis des GitHub-Repositories hochladen:
-   index.html
-   styles.css
-   app.js
-   manifest.webmanifest
-   service-worker.js
-   UPLOAD-ANLEITUNG-V6-1.txt
-2. Vorhandene Dateien mit gleichem Namen ersetzen.
-3. Die vorhandenen Bilddateien michie-hero.jpg, glc.jpg, favicon.png, icon-192.png und icon-512.png NICHT löschen.
-4. Commit-Nachricht: Repair Update v6.1 – Funktionen wiederhergestellt
-5. Nach Veröffentlichung Safari vollständig schließen und die Seite neu öffnen. Falls weiterhin die alte Version erscheint: iPhone Einstellungen > Apps > Safari > Erweitert > Websitedaten > nizzlex.github.io löschen.
+Dieses Update entfernt den komplizierten Mercedes-Backend-Connector vollständig.
+Alle Fahrzeug-, Preis- und Verbrauchswerte werden direkt in der App von Hand eingetragen.
 
-WIEDERHERGESTELLT:
-- Empfehlung Elektrisch / Hybrid / Benzin
-- Kosten je 100 km und Jahr
-- eigener Tankerkönig API-Key im lokalen Speicher
-- Standortbasierte E10-Abfrage und automatische Preisübernahme
-- Google Maps
-- mobility+ über frei einstellbaren iPhone-Kurzbefehl
-- ehrlicher Mercedes-Live-Connector über ein eigenes OAuth-Backend
+ENTHALTEN:
+- index.html
+- app.js
+- styles.css
+- service-worker.js
 
-WICHTIG ZU MERCEDES:
-Eine reine GitHub-Pages-Seite kann geheime OAuth-Zugangsdaten nicht sicher speichern. Deshalb funktioniert Live-Datenzugriff erst, wenn ein eigener HTTPS-Backend-Endpunkt eingerichtet wurde. Die App akzeptiert dafür JSON-Felder wie mileage, fuelLevel, batteryLevel, electricRange, electricConsumption und fuelConsumption.
+UPLOAD AUF GITHUB:
+1. Repository Nizzlex/Michelles-GLC-CostPilot öffnen.
+2. "Add file" > "Upload files" wählen.
+3. Die vier Dateien aus diesem Paket hochladen.
+4. Bei der Nachfrage bestehende Dateien ersetzen.
+5. Commit-Nachricht: "Update 6.1 – manuelle Fahrzeugdaten"
+6. Nach 1–3 Minuten die GitHub-Pages-App neu laden.
+7. Auf dem iPhone bei Bedarf Safari-Cache löschen oder die App vom Home-Bildschirm entfernen und neu hinzufügen.
+
+WICHTIG:
+Die vorhandenen Fotos und Icons bleiben unverändert im Repository. Dieses Paket enthält deshalb nur die zu ersetzenden Programmdateien.
+
+NEUE BERECHNUNGEN:
+- Kosten elektrisch, Hybrid und Benzin pro 100 km
+- Kosten pro Kilometer und pro Jahr
+- günstigster Fahrmodus und jährliche Ersparnis
+- aktueller Tankinhalt in Litern
+- aktueller Batterieinhalt in kWh
+- elektrische, Benzin- und Gesamtreichweite
+- Wert des verbleibenden Kraftstoffs und Stroms
+- Preis einer vollen Tankfüllung und Batterieladung
+- Break-even-Strompreis und Break-even-Benzinpreis
+- automatische Speicherung aller Eingaben auf dem iPhone
