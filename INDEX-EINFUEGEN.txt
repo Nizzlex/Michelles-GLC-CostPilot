@@ -1,0 +1,5 @@
+Direkt VOR dem bestehenden <script ...app.js...></script> einfügen:
+
+<script src="./tankerkoenig-fix.js?v=6.2"></script>
+
+Optional auch die app.js-Zeile auf ?v=6.2 setzen, damit iOS/PWA keinen alten Cache benutzt.
