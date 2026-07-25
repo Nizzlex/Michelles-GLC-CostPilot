@@ -1,37 +1,20 @@
-MICHIE'S GLC ORGANIZER – TANKERKÖNIG HOTFIX 7.1.1
+MICHIE'S GLC ORGANIZER – PREISSORTIERUNG HOTFIX 7.1.2
 
-Diesmal handelt es sich NICHT um einen Zusatz-Patch, sondern um direkte Ersatzdateien
-für den aktuell auf GitHub vorhandenen App-Stand.
+Korrektur:
+- Tankerkönig wird jetzt mit sort=price statt sort=dist abgefragt.
+- Zusätzlich sortiert die App die geladenen Tankstellen selbst nach E10-Preis:
+  günstigster Preis zuerst.
+- Bei identischem Preis wird die nähere Tankstelle zuerst angezeigt.
+- Tankstellen ohne verfügbaren E10-Preis stehen am Ende.
+- Die korrekte Preisübernahme aus Hotfix 7.1.1 bleibt erhalten.
+- Cache-Version auf 7.1.2 erhöht.
 
-ERSETZEN:
-1. app.js
-2. service-worker.js
+UPLOAD:
+1. app.js im Hauptverzeichnis ersetzen.
+2. service-worker.js im Hauptverzeichnis ersetzen.
+3. Commit durchführen.
+4. GitHub Pages kurz neu deployen lassen.
+5. Auf dem iPhone Safari/Web-App komplett schließen und erneut öffnen.
 
-Beide Dateien ins HAUPTVERZEICHNIS des GitHub-Repositories hochladen und die bestehenden
-Dateien ersetzen. Keine Unterordner anlegen.
-
-Danach:
-- Commit durchführen.
-- 1–2 Minuten warten, bis GitHub Pages neu deployed ist.
-- Safari: Seite neu laden.
-- Bei einer Home-Screen-App diese komplett schließen und neu öffnen.
-
-KORREKTUR:
-Die bisherige app.js verwendete:
-    const price = Number(s.e10);
-
-Die API-Anfrage verwendet aber:
-    type=e10
-
-Bei dieser Anfrage liefert Tankerkönig den Wert im Feld:
-    station.price
-
-Die neue Version verwendet daher:
-    station.price ?? station.e10
-
-Zusätzlich:
-- E10-Preis wird als z.B. 1,759 €/l dargestellt.
-- "Preis übernehmen" überträgt den Wert direkt in den Rechner.
-- Tankerkönig-Antworten werden nicht im Service-Worker-Cache gespeichert.
-- Alte PWA-Caches werden durch eine neue Cache-Version entfernt.
-- Alle bisherigen Funktionen des vorhandenen app.js bleiben erhalten.
+Danach sollte die Liste z.B. 1,819 €/l, 1,829 €/l, 1,839 €/l ... anzeigen
+statt nach Entfernung sortiert zu sein.

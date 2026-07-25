@@ -110,15 +110,27 @@ async function loadStations(){
       $('fuelMessage').textContent='Aktuelle E10-Preise werden geladen …';
 
       // type=e10 => Tankerkönig liefert den Kraftstoffpreis in "price".
-      const url=`https://creativecommons.tankerkoenig.de/json/list.php?lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}&rad=${encodeURIComponent(rad)}&sort=dist&type=e10&apikey=${encodeURIComponent(key)}`;
+      const url=`https://creativecommons.tankerkoenig.de/json/list.php?lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}&rad=${encodeURIComponent(rad)}&sort=price&type=e10&apikey=${encodeURIComponent(key)}`;
       const res=await fetch(url,{cache:'no-store'});
       const data=await res.json();
 
       if(!res.ok||!data.ok) throw new Error(data.message||'API-Anfrage fehlgeschlagen');
 
       const stations=Array.isArray(data.stations)?data.stations:[];
+
+      // Immer nach E10-Preis aufsteigend sortieren.
+      // Tankstellen ohne verfügbaren Preis stehen am Ende.
+      stations.sort((a,b)=>{
+        const pa=tankPrice(a), pb=tankPrice(b);
+        if(pa===null && pb===null) return Number(a.dist||999)-Number(b.dist||999);
+        if(pa===null) return 1;
+        if(pb===null) return -1;
+        if(pa!==pb) return pa-pb;
+        return Number(a.dist||999)-Number(b.dist||999);
+      });
+
       renderStations(stations.slice(0,12));
-      $('fuelMessage').textContent=`${stations.length} Tankstellen im Umkreis gefunden.`;
+      $('fuelMessage').textContent=`${stations.length} Tankstellen im Umkreis gefunden – günstigste zuerst.`;
     }catch(e){
       $('fuelMessage').textContent=`Preise konnten nicht geladen werden${e?.message?`: ${e.message}`:'.'}`;
       console.error('[Tankerkönig]',e);
@@ -182,5 +194,5 @@ load();
 calculate();
 
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./service-worker.js?v=7.1.1').catch(console.error);
+  navigator.serviceWorker.register('./service-worker.js?v=7.1.2').catch(console.error);
 }

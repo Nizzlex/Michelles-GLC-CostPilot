@@ -1,4 +1,4 @@
-const CACHE='glc-organizer-v7-1-1';
+const CACHE='glc-organizer-v7-1-2';
 const ASSETS=[
   './',
   './index.html',
