@@ -1,22 +1,37 @@
-MICHIE'S GLC ORGANIZER – UPDATE 7.0
+MICHIE'S GLC ORGANIZER – TANKERKÖNIG HOTFIX 7.1.1
 
-1. ZIP-Datei entpacken.
-2. In GitHub das Repository "Michelles-GLC-CostPilot" öffnen.
-3. Add file > Upload files wählen.
-4. ALLE Dateien aus diesem Paket direkt in das Hauptverzeichnis hochladen.
-5. Vorhandene Dateien mit gleichem Namen ersetzen.
-6. Commit-Nachricht: "Update 7.0 – iPhone App, Tankerkönig und Kurzbefehle"
-7. Nach 1–3 Minuten die GitHub-Pages-Seite in Safari neu laden.
-8. Bei alter Ansicht: Safari-Website-Daten löschen oder die Home-Bildschirm-App entfernen und neu hinzufügen.
+Diesmal handelt es sich NICHT um einen Zusatz-Patch, sondern um direkte Ersatzdateien
+für den aktuell auf GitHub vorhandenen App-Stand.
 
-ERSTE EINRICHTUNG
-- Zahnrad oben rechts öffnen.
-- Tankerkönig API-Key eintragen.
-- Namen der beiden iPhone-Kurzbefehle eintragen.
+ERSETZEN:
+1. app.js
+2. service-worker.js
 
-KURZBEFEHLE
-Erstelle in der Apple-App "Kurzbefehle" zwei Kurzbefehle:
-1. "mobility+ öffnen" mit der Aktion "App öffnen" > mobility+
-2. "Mercedes-Benz öffnen" mit der Aktion "App öffnen" > Mercedes-Benz
+Beide Dateien ins HAUPTVERZEICHNIS des GitHub-Repositories hochladen und die bestehenden
+Dateien ersetzen. Keine Unterordner anlegen.
 
-Die Namen können frei gewählt werden, müssen aber exakt so auch in den App-Einstellungen stehen.
+Danach:
+- Commit durchführen.
+- 1–2 Minuten warten, bis GitHub Pages neu deployed ist.
+- Safari: Seite neu laden.
+- Bei einer Home-Screen-App diese komplett schließen und neu öffnen.
+
+KORREKTUR:
+Die bisherige app.js verwendete:
+    const price = Number(s.e10);
+
+Die API-Anfrage verwendet aber:
+    type=e10
+
+Bei dieser Anfrage liefert Tankerkönig den Wert im Feld:
+    station.price
+
+Die neue Version verwendet daher:
+    station.price ?? station.e10
+
+Zusätzlich:
+- E10-Preis wird als z.B. 1,759 €/l dargestellt.
+- "Preis übernehmen" überträgt den Wert direkt in den Rechner.
+- Tankerkönig-Antworten werden nicht im Service-Worker-Cache gespeichert.
+- Alte PWA-Caches werden durch eine neue Cache-Version entfernt.
+- Alle bisherigen Funktionen des vorhandenen app.js bleiben erhalten.
