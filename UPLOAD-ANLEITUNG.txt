@@ -1,27 +1,22 @@
-MICHIE’S GLC ORGANIZER – UPDATE FÜR DIE BESTEHENDE APP
+MICHIE'S GLC ORGANIZER – UPDATE 7.0
 
-Nur diese fünf Dateien im Stammverzeichnis des bestehenden GitHub-Repositories
-Michelles-GLC-CostPilot hochladen und die vorhandenen Dateien ersetzen:
+1. ZIP-Datei entpacken.
+2. In GitHub das Repository "Michelles-GLC-CostPilot" öffnen.
+3. Add file > Upload files wählen.
+4. ALLE Dateien aus diesem Paket direkt in das Hauptverzeichnis hochladen.
+5. Vorhandene Dateien mit gleichem Namen ersetzen.
+6. Commit-Nachricht: "Update 7.0 – iPhone App, Tankerkönig und Kurzbefehle"
+7. Nach 1–3 Minuten die GitHub-Pages-Seite in Safari neu laden.
+8. Bei alter Ansicht: Safari-Website-Daten löschen oder die Home-Bildschirm-App entfernen und neu hinzufügen.
 
-- index.html
-- manifest.webmanifest
-- service-worker.js
-- icon-192.png
-- icon-512.png
+ERSTE EINRICHTUNG
+- Zahnrad oben rechts öffnen.
+- Tankerkönig API-Key eintragen.
+- Namen der beiden iPhone-Kurzbefehle eintragen.
 
-Unverändert bleiben insbesondere:
-- app.js
-- styles.css
-- glc.jpg
-- mercedes-logo.jpg
-- alle Familienbilder
-- die vorhandene Rechenlogik und das Design
+KURZBEFEHLE
+Erstelle in der Apple-App "Kurzbefehle" zwei Kurzbefehle:
+1. "mobility+ öffnen" mit der Aktion "App öffnen" > mobility+
+2. "Mercedes-Benz öffnen" mit der Aktion "App öffnen" > Mercedes-Benz
 
-Empfohlener Commit:
-Umbenennung in Michie's GLC Organizer und neues App-Icon
-
-Hinweis für iPhone:
-Nach dem GitHub-Pages-Update die App einmal vollständig schließen und neu öffnen.
-Falls das alte Home-Screen-Icon weiterhin angezeigt wird, die bisherige Verknüpfung
-vom Home-Bildschirm entfernen und die Webseite erneut über „Zum Home-Bildschirm“
-hinzufügen. iOS speichert App-Icons teilweise unabhängig vom Service-Worker-Cache.
+Die Namen können frei gewählt werden, müssen aber exakt so auch in den App-Einstellungen stehen.

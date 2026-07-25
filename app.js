@@ -1,135 +1,70 @@
 'use strict';
+const $ = id => document.getElementById(id);
+const defaults={ep:0.41,bp:1.90,ek:23,bl:8.7,hk:11.5,hl:3.8,lv:10,annualKm:15000,odoInput:45680,fuelLevel:64,batteryLevel:78,tankSize:50,batteryCapacity:11.1,radius:5,apiKey:'',mobilityShortcut:'mobility+ öffnen',mercedesShortcut:'Mercedes-Benz öffnen'};
+const inputIds=Object.keys(defaults);
+const stateKey='michiesGlcOrganizerV70';
+let state={...defaults};
 
-const $ = (id) => document.getElementById(id);
-const INPUT_IDS = ['odoInput','fuelLevel','batteryLevel','tankSize','batteryCapacity','km','ep','bp','ek','bl','hk','hl','lv'];
+function load(){try{state={...defaults,...JSON.parse(localStorage.getItem(stateKey)||'{}')}}catch{state={...defaults}} inputIds.forEach(id=>{if($(id))$(id).value=state[id]??''});$('radiusValue').textContent=state.radius;}
+function save(){inputIds.forEach(id=>{if($(id))state[id]=$(id).type==='number'||$(id).type==='range'?Number($(id).value):$(id).value});localStorage.setItem(stateKey,JSON.stringify(state));}
+function n(id){const v=Number($(id)?.value);return Number.isFinite(v)?v:0} function clamp(v,a,b){return Math.min(b,Math.max(a,v))}
+function money(v,d=2){return Number.isFinite(v)?v.toLocaleString('de-DE',{style:'currency',currency:'EUR',minimumFractionDigits:d,maximumFractionDigits:d}):'–'}
+function number(v,d=0){return Number.isFinite(v)?v.toLocaleString('de-DE',{minimumFractionDigits:d,maximumFractionDigits:d}):'–'}
+function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2300)}
 
-function num(id) {
-  const value = Number.parseFloat($(id)?.value);
-  return Number.isFinite(value) ? value : 0;
+function calculate(){
+ const ep=Math.max(0,n('ep')),bp=Math.max(0,n('bp')),factor=1+clamp(n('lv'),0,50)/100,annual=Math.max(0,n('annualKm'));
+ const costs={electric:n('ek')*factor*ep,hybrid:n('hk')*factor*ep+n('hl')*bp,petrol:n('bl')*bp};
+ const names={electric:'Elektrisch',hybrid:'Hybrid',petrol:'Benzin'};
+ const sorted=Object.entries(costs).sort((a,b)=>a[1]-b[1]),winner=sorted[0],second=sorted[1],saving=(second[1]-winner[1]),annualSaving=saving*annual/100;
+ ['electric','hybrid','petrol'].forEach(k=>{$(`${k}Cost`).textContent=money(costs[k]);$(`${k}100`).textContent=money(costs[k])+' / 100 km';$(`${k}Year`).textContent=money(costs[k]*annual/100)+' / Jahr';$(`${k}Card`).classList.toggle('best',k===winner[0])});
+ $('heroWinner').textContent=names[winner[0]]+' fahren';$('heroSaving').textContent=`${money(saving)} günstiger je 100 km`;$('winnerPill').textContent=names[winner[0]];
+ $('recommendation').textContent=`${names[winner[0]]} ist aktuell am günstigsten. Gegenüber Platz 2 sparst du etwa ${money(saving)} je 100 km und rund ${money(annualSaving)} pro Jahr.`;
+ const fuelPct=clamp(n('fuelLevel'),0,100),batPct=clamp(n('batteryLevel'),0,100),litres=n('tankSize')*fuelPct/100,kwh=n('batteryCapacity')*batPct/100;
+ const er=n('ek')>0?kwh/n('ek')*100:0,pr=n('bl')>0?litres/n('bl')*100:0;
+ $('statusOdo').textContent=number(n('odoInput'))+' km';$('statusFuel').textContent=number(fuelPct)+' %';$('statusBattery').textContent=number(batPct)+' %';$('statusRange').textContent=number(er+pr)+' km';
+ $('fuelLitres').textContent=`${number(litres,1)} l`;$('batteryKwh').textContent=`${number(kwh,1)} kWh`;$('electricRange').textContent=`${number(er)} km`;$('petrolRange').textContent=`${number(pr)} km`;$('totalRange').textContent=`${number(er+pr)} km`;$('energyValue').textContent=money(litres*bp+kwh*factor*ep);
+ const beE=n('ek')>0?costs.petrol/(n('ek')*factor):NaN,beP=n('bl')>0?costs.electric/n('bl'):NaN;
+ $('breakEvenElectricity').textContent=Number.isFinite(beE)?money(beE)+'/kWh':'–';$('breakEvenPetrol').textContent=Number.isFinite(beP)?money(beP)+'/l':'–';
+ save();
 }
+function showScreen(name){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.dataset.screen===name));document.querySelectorAll('.tabbar button').forEach(b=>b.classList.toggle('active',b.dataset.go===name));window.scrollTo({top:0,behavior:'smooth'});}
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>showScreen(b.dataset.go)));
+inputIds.forEach(id=>$(id)?.addEventListener('input',()=>{if(id==='radius')$('radiusValue').textContent=$(id).value;calculate()}));
 
-function clamp(value, min, max) {
-  return Math.min(max, Math.max(min, value));
+function shortcutUrl(name){return `shortcuts://run-shortcut?name=${encodeURIComponent(name)}`}
+function openShortcut(name){if(!name){toast('Bitte zuerst den Kurzbefehl-Namen speichern.');return}location.href=shortcutUrl(name)}
+$('openMobility').onclick=()=>openShortcut($('mobilityShortcut').value.trim());$('openMercedes').onclick=()=>openShortcut($('mercedesShortcut').value.trim());$('openMercedesVehicle').onclick=()=>openShortcut($('mercedesShortcut').value.trim());
+$('openGoogleMaps').onclick=()=>window.open('https://www.google.com/maps/search/?api=1&query=Tankstelle','_blank');
+
+$('openSettings').onclick=()=>$('settingsDialog').showModal();
+$('saveSettings').onclick=()=>{save();toast('Einstellungen gespeichert')};
+$('resetData').onclick=()=>{if(confirm('Wirklich alle gespeicherten Werte zurücksetzen?')){localStorage.removeItem(stateKey);location.reload()}};
+
+async function loadStations(){
+ const key=$('apiKey').value.trim(); if(!key){$('fuelMessage').textContent='Bitte zuerst den Tankerkönig API-Key in den Einstellungen speichern.';$('settingsDialog').showModal();return}
+ if(!navigator.geolocation){$('fuelMessage').textContent='Standortabfrage wird von diesem Gerät nicht unterstützt.';return}
+ $('fuelMessage').textContent='Standort wird ermittelt …';$('stations').innerHTML='';
+ navigator.geolocation.getCurrentPosition(async pos=>{
+  const {latitude:lat,longitude:lng}=pos.coords,rad=n('radius');
+  try{
+   $('fuelMessage').textContent='Aktuelle E10-Preise werden geladen …';
+   const url=`https://creativecommons.tankerkoenig.de/json/list.php?lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}&rad=${encodeURIComponent(rad)}&sort=dist&type=e10&apikey=${encodeURIComponent(key)}`;
+   const res=await fetch(url);const data=await res.json();
+   if(!res.ok||!data.ok)throw new Error(data.message||'API-Anfrage fehlgeschlagen');
+   renderStations((data.stations||[]).slice(0,12));$('fuelMessage').textContent=`${data.stations?.length||0} Tankstellen im Umkreis gefunden.`;
+  }catch(e){$('fuelMessage').textContent='Preise konnten nicht geladen werden. Bitte API-Key und Internetverbindung prüfen.';console.error(e)}
+ },()=>{$('fuelMessage').textContent='Standortzugriff wurde nicht erlaubt. Bitte in den iPhone-Einstellungen für Safari aktivieren.'},{enableHighAccuracy:true,timeout:12000,maximumAge:300000});
 }
-
-function money(value, digits = 2) {
-  return Number.isFinite(value)
-    ? value.toLocaleString('de-DE', { style: 'currency', currency: 'EUR', minimumFractionDigits: digits, maximumFractionDigits: digits })
-    : '–';
+function renderStations(stations){
+ $('stations').innerHTML=stations.length?'':'<article class="card"><p>Keine Tankstellen gefunden.</p></article>';
+ stations.forEach(s=>{
+  const card=document.createElement('article');card.className='station-card';const price=Number(s.e10);const maps=`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${s.lat},${s.lng}`)}`;
+  card.innerHTML=`<div class="station-top"><div><h3>${escapeHtml(s.name||'Tankstelle')}</h3><p>${escapeHtml(`${s.street||''} ${s.houseNumber||''}, ${s.postCode||''} ${s.place||''}`)}</p></div><div class="price">${Number.isFinite(price)?price.toLocaleString('de-DE',{minimumFractionDigits:3,maximumFractionDigits:3})+' €':'–'}</div></div><div class="station-meta"><span>${number(s.dist,1)} km</span><span>${s.isOpen?'Geöffnet':'Geschlossen'}</span></div><div class="station-actions"><button type="button">Preis übernehmen</button><a href="${maps}" target="_blank" rel="noopener">Route</a></div>`;
+  card.querySelector('button').onclick=()=>{if(Number.isFinite(price)){$('bp').value=price;calculate();toast(`E10-Preis ${price.toLocaleString('de-DE',{minimumFractionDigits:3})} € übernommen`);showScreen('calculator')}};$('stations').appendChild(card);
+ });
 }
+function escapeHtml(v){return String(v).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+$('loadStations').onclick=loadStations;
 
-function number(value, digits = 0) {
-  return Number.isFinite(value)
-    ? value.toLocaleString('de-DE', { minimumFractionDigits: digits, maximumFractionDigits: digits })
-    : '–';
-}
-
-function saveInputs() {
-  const values = Object.fromEntries(INPUT_IDS.map((id) => [id, $(id).value]));
-  localStorage.setItem('glcManualInputsV61', JSON.stringify(values));
-}
-
-function loadInputs() {
-  try {
-    const values = JSON.parse(localStorage.getItem('glcManualInputsV61'));
-    Object.entries(values || {}).forEach(([id, value]) => {
-      if ($(id)) $(id).value = value;
-    });
-  } catch (error) {
-    console.warn('Gespeicherte Werte konnten nicht geladen werden.', error);
-  }
-}
-
-function calculate() {
-  const electricityPrice = Math.max(0, num('ep'));
-  const petrolPrice = Math.max(0, num('bp'));
-  const chargingFactor = 1 + clamp(num('lv'), 0, 50) / 100;
-  const annualKm = Math.max(0, num('km'));
-
-  const electricConsumption = Math.max(0, num('ek'));
-  const petrolConsumption = Math.max(0, num('bl'));
-  const hybridElectric = Math.max(0, num('hk'));
-  const hybridPetrol = Math.max(0, num('hl'));
-
-  const costs = {
-    Elektrisch: electricConsumption * chargingFactor * electricityPrice,
-    Hybrid: hybridElectric * chargingFactor * electricityPrice + hybridPetrol * petrolPrice,
-    Benzin: petrolConsumption * petrolPrice
-  };
-
-  const sorted = Object.entries(costs).sort((a, b) => a[1] - b[1]);
-  const winner = sorted[0];
-  const runnerUp = sorted[1];
-  const saving100 = runnerUp[1] - winner[1];
-  const annualSaving = saving100 * annualKm / 100;
-
-  $('winner').textContent = winner[0];
-  $('saving').textContent = `${money(saving100)} günstiger als Platz 2`;
-  $('electricCost').textContent = money(costs.Elektrisch);
-  $('hybridCost').textContent = money(costs.Hybrid);
-  $('petrolCost').textContent = money(costs.Benzin);
-
-  $('recommendation').innerHTML = `<strong>${winner[0]} ist mit den aktuellen Eingaben am günstigsten.</strong><span>Gegenüber dem zweitbesten Fahrmodus sparst du rund ${money(saving100)} je 100 km beziehungsweise ${money(annualSaving)} pro Jahr.</span>`;
-
-  const rows = {
-    electric: costs.Elektrisch,
-    hybrid: costs.Hybrid,
-    petrol: costs.Benzin
-  };
-  Object.entries(rows).forEach(([key, cost100]) => {
-    $(`${key}100`).textContent = money(cost100);
-    $(`${key}Km`).textContent = money(cost100 / 100, 3);
-    $(`${key}Year`).textContent = money(cost100 * annualKm / 100);
-  });
-
-  const fuelLevel = clamp(num('fuelLevel'), 0, 100);
-  const batteryLevel = clamp(num('batteryLevel'), 0, 100);
-  const tankSize = Math.max(0, num('tankSize'));
-  const batteryCapacity = Math.max(0, num('batteryCapacity'));
-
-  const litresRemaining = tankSize * fuelLevel / 100;
-  const batteryRemaining = batteryCapacity * batteryLevel / 100;
-  const petrolRange = petrolConsumption > 0 ? litresRemaining / petrolConsumption * 100 : 0;
-  const electricRange = electricConsumption > 0 ? batteryRemaining / electricConsumption * 100 : 0;
-  const totalRange = petrolRange + electricRange;
-
-  $('odo').textContent = `${number(Math.max(0, num('odoInput')))} km`;
-  $('fuelLitres').textContent = `${number(litresRemaining, 1)} l (${number(fuelLevel)} %)`;
-  $('batteryKwh').textContent = `${number(batteryRemaining, 1)} kWh (${number(batteryLevel)} %)`;
-  $('electricRange').textContent = `${number(electricRange)} km`;
-  $('petrolRange').textContent = `${number(petrolRange)} km`;
-  $('totalRange').textContent = `${number(totalRange)} km`;
-  $('fuelValue').textContent = money(litresRemaining * petrolPrice);
-  $('batteryValue').textContent = money(batteryRemaining * chargingFactor * electricityPrice);
-
-  $('fullChargeCost').textContent = money(batteryCapacity * chargingFactor * electricityPrice);
-  $('fullTankCost').textContent = money(tankSize * petrolPrice);
-
-  const breakEvenElectricity = electricConsumption > 0
-    ? costs.Benzin / (electricConsumption * chargingFactor)
-    : NaN;
-  const breakEvenPetrol = petrolConsumption > 0
-    ? costs.Elektrisch / petrolConsumption
-    : NaN;
-
-  $('breakEvenElectricity').textContent = Number.isFinite(breakEvenElectricity)
-    ? `${money(breakEvenElectricity)}/kWh`
-    : '–';
-  $('breakEvenPetrol').textContent = Number.isFinite(breakEvenPetrol)
-    ? `${money(breakEvenPetrol)}/l`
-    : '–';
-
-  saveInputs();
-}
-
-loadInputs();
-INPUT_IDS.forEach((id) => {
-  $(id)?.addEventListener('input', calculate);
-  $(id)?.addEventListener('change', calculate);
-});
-$('calcBtn')?.addEventListener('click', calculate);
-calculate();
-
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./service-worker.js?v=6.1').catch(() => {});
-}
+load();calculate();if('serviceWorker'in navigator)navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
